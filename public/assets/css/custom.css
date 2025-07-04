@@ -1,0 +1,10 @@
+/**
+* Side Bar Custom
+*/
+
+.menu-item-submenu .menu-text, .menu-link .menu-text  {
+    margin-right: 10px !important;
+    margin-left: 10px;
+
+}
+
