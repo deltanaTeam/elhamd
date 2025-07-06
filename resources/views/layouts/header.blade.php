@@ -14,11 +14,11 @@
       </a>
 
       <!-- Start Nav Links -->
-      <nav class=" hidden lg:flex items-center gap-5 font-medium">
+      <nav class=" hidden lg:!flex items-center gap-5 font-medium">
         <!-- Add the "text-teal-700" class to the active link -->
-        <a href="{{route('home')}}"  class="{{request()->routeIs('home') ?'text-teal-700':''}}">الرئيسية</a>
-        <a href="{{route('about')}}" class="{{request()->routeIs('about') ?'text-teal-700':''}}">عنا</a>
-        <a href="{{route('contact-us')}}" class="{{request()->routeIs('contact-us') ?'text-teal-700':''}}">التواصل</a>
+        <a href="{{route('home')}}"  class="{{request()->routeIs('home') ?'text-teal-700':''}}">{{__('lang.home')}}</a>
+        <a href="{{route('about')}}" class="{{request()->routeIs('about') ?'text-teal-700':''}}">{{__('lang.about')}}</a>
+        <a href="{{route('contact-us')}}" class="{{request()->routeIs('contact-us') ?'text-teal-700':''}}">{{__('lang.contact us')}}</a>
       </nav>
       <!-- End Nav Links -->
 
@@ -32,14 +32,14 @@
           <select
             name=""
             id=""
-            class="hidden sm:block text-gray-500 pe-2 dark:!text-gray-400"
+            class="hidden sm:!block text-gray-500 pe-2 dark:!text-gray-400"
           >
-            <option value="-1" selected>جميع الفئات</option>
+            <option value="-1" selected>{{__('lang.all categories')}}</option>
           </select>
           <input
             type="text"
             class="flex-grow-1 text-gray-500 sm:ps-3 lg:!border-s-2 !border-stone-300 dark:!border-teal-800 dark:!text-gray-400 placeholder:text-sm placeholder:text-gray-500/70"
-            placeholder="البحث عن الأدوية والمنتجات الطبية"
+            placeholder=  "{{__('lang.search for medicines and medical products')}}"
           />
         </div>
         <span
@@ -51,10 +51,13 @@
       <!-- End Search Container -->
 
       <!-- Start Utilities Shortcuts -->
-      <div class=" hidden lg:flex lg:items-center gap-4">
-        <button x-on:click="changeDir()" class="">
+      @php  $currentLocale = LaravelLocalization::getCurrentLocale();
+      $otherLocale = $currentLocale ==='ar'?'en':'ar';
+      @endphp
+      <div class=" hidden lg:!flex items-center gap-4">
+        <a x-on:click="changeDir()"  href="{{ LaravelLocalization::getLocalizedURL($otherLocale, null, [], true) }}">
           <i data-lucide="languages"></i>
-        </button>
+        </a>
         <button
           x-on:click="changeTheme(); theme = theme==='light' ? 'dark' : 'light'"
           class=""
@@ -75,13 +78,13 @@
             style="position-anchor: --anchor-1"
           >
             <div class="card-body p-3">
-              <span class="text-lg font-bold">8 عناصر</span>
-              <span class="text-teal-600">الإجمالي: $999</span>
+              <span class="text-lg font-bold">8 {{__('lang.items')}}</span>
+              <span class="text-teal-600">{{__('lang.total')}}: $999</span>
               <div class="card-actions">
                 <a
                   href=""
                   class="btn !border btn-soft btn-info dark:btn-accent btn-block hover:!border-0 hover:!text-white"
-                  >View cart</a
+                  >{{__('lang.view cart')}}</a
                 >
               </div>
             </div>
@@ -91,7 +94,7 @@
       <!-- Start Utilities Shortcuts -->
 
       <!-- Start Login Buttons, Profile Menu -->
-      <div class="hidden lg:block">
+      <div class="hidden lg:!block">
         <!-- User Menu and Avatar, visible only when user logged in -->
         <div class="">
           <!-- Profile Name and Avatar -->
@@ -101,8 +104,8 @@
             class="cursor-pointer flex items-center gap-4"
           >
             <div class="font-medium">
-              <span>مرحبا</span>
-              <span>هند !</span>
+              <span>{{__('lang.welcome')}}</span>
+              <span>{{__('lang.username')}}</span>
             </div>
             <div
               class="w-10 rounded-full btn-circle avatar overflow-hidden"
@@ -126,7 +129,7 @@
               >
                 <div class="flex items-center gap-2">
                   <span class="material-icons">person</span>
-                  <span>الحساب</span>
+                  <span>{{__('lang.the account')}}</span>
                 </div>
               </a>
             </li>
@@ -136,7 +139,7 @@
               >
                 <div class="flex items-center gap-2">
                   <span class="material-icons">notifications</span>
-                  <span>الاشعارات</span>
+                  <span>{{__('lang.notifications')}}</span>
                 </div>
                 <span class="badge badge-primary text-stone-200">+99</span>
               </a>
@@ -158,7 +161,7 @@
               >
                 <div class="flex items-center gap-2">
                   <span class="material-icons text-red-600">logout</span>
-                  <span>تسجيل خروج</span>
+                  <span>{{__('lang.logout')}}</span>
                 </div>
               </div>
             </li>
@@ -167,9 +170,9 @@
         <!-- Signin button group, visible only if user not logged in -->
         <div class="hidden flex items-center gap-2">
           <a class="btn rounded-md btn-outline-primary-500"
-            >الدخول كزائر
+            >{{__('lang.guest login')}}
           </a>
-          <a class="btn rounded-md btn-primary-500">تسجيل دخول</a>
+          <a class="btn rounded-md btn-primary-500">{{__('lang.login')}}</a>
         </div>
       </div>
       <!-- End Login Buttons, Profile Menu -->
@@ -207,25 +210,28 @@
                   >
                     <span class="material-icons"> login </span>
 
-                    <p>تسجيل دخول</p>
+                    <p>{{__('lang.login')}}</p>
                   </a>
                 </li>
               </ul>
               <!-- Categories List -->
               <div class="collapse collapse-arrow">
                 <input type="checkbox" name="sideMenuAccordion" />
-                <div class="collapse-title font-semibold">الفئات</div>
+                <div class="collapse-title font-semibold">{{__('lang.catrgories')}}</div>
                 <div class="collapse-content">
                   <ul class="menu">
+                    @forelse($categories as $category)
                     <li>
                       <a
                         class="menu-item rounded-full"
                         href="/pages/profile/account"
                       >
-                        <p>صحة الجهاز التنفسي</p>
+                        <p>{{$category->name}}</p>
                       </a>
                     </li>
-                    <li>
+                    @empty
+                    @endforelse
+                    <!-- <li>
                       <a
                         class="menu-item rounded-full"
                         href="/pages/profile/reservations"
@@ -288,7 +294,7 @@
                       >
                         <p>تخفيف الألم</p>
                       </a>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </div>

@@ -38,7 +38,7 @@
                   });
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   </script>
-  <script type="text/javascript">
+<script type="text/javascript">
   function make_money_format(id){
    var money_input = document.getElementById(id);
    var money_value = Math.abs(money_input.value);
@@ -56,15 +56,15 @@
   function AddRowinput(){
    var count = document.getElementById("tableInputs").rows.length;
    var table = document.getElementById("tableInputs");
-  // // var options = document.getElementById("select1");
-  var selecte= document.getElementById("selectForm");
-  //
-  var first_row=document.getElementById("row_1");
-  var row = table.insertRow(count);
-   row.id="row_"+count;
-  var data=first_row.innerHTML;
-  var cell1 = row.innerHTML=data;
-  var xx = row.firstElementChild.innerHTML = selecte.innerHTML;
+    // // var options = document.getElementById("select1");
+    var selecte= document.getElementById("selectForm");
+    //
+    var first_row=document.getElementById("row_1");
+    var row = table.insertRow(count);
+     row.id="row_"+count;
+    var data=first_row.innerHTML;
+    var cell1 = row.innerHTML=data;
+    var xx = row.firstElementChild.innerHTML = selecte.innerHTML;
 
 
 

@@ -7,9 +7,9 @@
 >
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/images/logos/Logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="{{asset('images/logos/Logo.svg')}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Qurtasia,Print file ,Print Books, Covering papers."/>
+    <meta name="description" content="pharma,pharmacies ."/>
     <title>{{__('lang.'.config('app.name'))}} - @yield('title')</title>
 
     @vite([
@@ -21,6 +21,8 @@
      'resources/src/assets/css/main.css',
      'resources/src/assets/css/rtl.css',
      'resources/src/assets/css/styles.css',
+     'resources/src/assets/css/responsive.css',
+
      'resources/src/assets/libs/material-icon/material-icon.css',
      'resources/js/app.js',
      'resources/src/main.js',
@@ -36,9 +38,9 @@
     <main>
 
       @yield('content')
-      @include('layouts.footer')
     </main>
-    <footer></footer>
+    @include('layouts.footer')
+
 
 
   </body>

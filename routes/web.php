@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController ;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController ;
+
 use App\Http\Controllers\HomeController  ;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
@@ -10,11 +12,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
   Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('dashboard',[AdminHomeController::class,'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::resource('categories',AdminHomeController::class)->except(['show']);
+    Route::resource('categories',AdminCategoryController::class)->except(['show']);
+    Route::get('categories/data',[AdminCategoryController::class,'data'])->name('categories.data');
+
   });
   Route::get('/',[HomeController::class,'index'])->name('home');
   Route::get('/contact-us',[HomeController::class,'getContact'])->name('contact-us');
   Route::get('/about',[HomeController::class,'getAbout'])->name('about');
+  Route::get('/category/{id}',[HomeController::class,'categoryShow'])->name('category.show');
 
 
 });

@@ -9,7 +9,7 @@
     <div class="wrapper">
       <!-- Start Categories List -->
       <div
-        class=" hidden lg:flex justify-between items-center gap-4 text-sm lg:text-sm xl:text-base xl:gap-6 2xl:gap-8 py-3 text-white dark:!text-gray-300"
+        class=" hidden lg:!flex justify-between items-center gap-4 text-sm lg:text-sm xl:text-base xl:gap-6 2xl:gap-8 py-3 text-white dark:!text-gray-300"
       >
         <a href="" class="whitespace-nowrap">صحة الجهاز التنفسي</a>
         <a href="" class="whitespace-nowrap">رعاية العين والأذن</a>
@@ -97,7 +97,7 @@
   <section>
     <div class="wrapper">
       <div
-        class="bg-base dark:!bg-slate-800 dark:shadow-slate-600/30 !shadow-lg p-8 !rounded-md translate-y-[-20%] sm:translate-y-[-50%] grid sm:grid-cols-2 lg:grid-cols-4 gap-8"
+        class="bg-base dark:bg-slate-800 dark:shadow-slate-600/30 !shadow-lg p-8 !rounded-md translate-y-[-20%] sm:translate-y-[-50%] grid sm:grid-cols-2 lg:grid-cols-4 gap-8"
       >
         <!-- Feature Card -->
         <div class="feature-card">
@@ -604,7 +604,7 @@
   <!-- End Top products Section -->
 
   <!-- Start Banner Section -->
-  <section class="bg-purple-50 dark:bg-slate-800/80 relative">
+  <section class="!bg-purple-50 dark:bg-slate-800/80 relative">
     <!-- Banner Image -->
     <img
       src="{{ asset('images/uploads/drug-banner.png') }}"

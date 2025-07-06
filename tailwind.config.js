@@ -13,9 +13,10 @@ export default {
     './resources/src/**/*.html',
     './resources/src/assets/**/*.css',
     "./index.html",
-  "./src/**/*.{js,ts,jsx,tsx,html}",
-  "./resources/views/**/*.blade.php",
-  "./components/**/*.{html,php}",
+
+    "./src/**/*.{js,ts,jsx,tsx,html}",
+    "./resources/views/**/*.blade.php",
+    "./components/**/*.{html,php}",
   ],
 
   theme: {
