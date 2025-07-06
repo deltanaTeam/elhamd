@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f2faff; /* Track color */
+  border-radius: 8px;
+}
+
+/* Scrollbar itself */
+::-webkit-scrollbar {
+  width: 7px; /* Scrollbar width */
+  background: #f2faff;
+}
+
+/* Scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: #dedede; /* Thumb color */
+  border-radius: 6px;
+  border: 2px solid #f2faff;
+}
+
+.wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  @media (max-width: 1024px) {
+    padding: 0 1rem !important;
+  }
+}

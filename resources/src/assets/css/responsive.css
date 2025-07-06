@@ -1,0 +1,52 @@
+@media (min-width: 1400px) {
+  .card-instructor {
+    min-width: 310px;
+  }
+}
+
+@media (max-width: 992px) {
+  .btn {
+    padding: 0.5rem 1.5rem;
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    margin-top: 60px;
+  }
+  section {
+    margin-bottom: 2rem;
+    padding-block: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 2.5rem;
+  }
+
+  .section-sub-title {
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title {
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 2rem;
+  }
+
+  .section-sub-title {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}

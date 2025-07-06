@@ -1,0 +1,52 @@
+/* Start Home Page */
+
+#heroCarousel {
+  .swiper-pagination {
+    bottom: 6rem;
+    left: unset;
+    inset-inline-start: 25%;
+    .swiper-pagination-bullet {
+      background: var(--color-stone-700);
+    }
+    .swiper-pagination-bullet-active {
+      background: var(--color-teal-700);
+      width: 1rem;
+      border-radius: 4px;
+    }
+  }
+}
+/* Start Account Page */
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0);
+  }
+
+  15% {
+    transform: rotate(14deg);
+  }
+
+  30% {
+    transform: rotate(-8deg);
+  }
+
+  40% {
+    transform: rotate(14deg);
+  }
+
+  50% {
+    transform: rotate(-4deg);
+  }
+
+  60% {
+    transform: rotate(10deg);
+  }
+
+  70% {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(0);
+  }
+}
