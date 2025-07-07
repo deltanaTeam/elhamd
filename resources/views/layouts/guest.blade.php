@@ -13,7 +13,6 @@
     <title>{{__('lang.'.config('app.name'))}} - @yield('title')</title>
 
     @vite([
-    'resources/css/app.css',
      'resources/src/style.css',
      'resources/src/assets/css/vars.css',
      'resources/src/assets/css/fonts.css',

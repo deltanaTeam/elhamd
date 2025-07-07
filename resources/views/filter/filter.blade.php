@@ -2,9 +2,9 @@
 
 @section('title',  __('lang.product page'))
 
+@section('content')
 
 
-   <main>
       <div class="wrapper">
         <!-- Start Products Contianer -->
         <div x-data="{showFilterMenu: false}" class="products-container">
@@ -14,7 +14,7 @@
               class="bg-base w-10/12 max-w-lg lg:w-full h-full overflow-auto"
             >
               <!-- Price Filter -->
-              <div class="p-4 flex justify-end lg:hidden">
+              <div class="p-4 lg:hidden flex justify-end ">
                 <button @click="showFilterMenu = false" class="material-icons">
                   close
                 </button>
@@ -383,7 +383,6 @@
         <!-- Start Pagination -->
         <!-- End Products Container -->
       </div>
-    </main>
 
   <script
       type="module"
@@ -391,3 +390,4 @@
     ></script>
 
 
+@endsection
