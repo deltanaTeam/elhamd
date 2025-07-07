@@ -218,7 +218,6 @@ trait DesignButton
       $lang = __('lang.are_you_sure_delete');
       $text = ' <div class =" text-danger text-bold"> '.$lang.' </div>
       ';
-      $design = new DesignButton;
 
       $form = $this->make_delete($route);
       $body =$text . $form;

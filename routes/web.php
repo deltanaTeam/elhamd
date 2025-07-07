@@ -12,8 +12,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
   Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('dashboard',[AdminHomeController::class,'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::resource('categories',AdminCategoryController::class)->except(['show']);
-    Route::get('categories/data',[AdminCategoryController::class,'data'])->name('categories.data');
+    Route::resource('categories',AdminCategoryController::class);
 
   });
   Route::get('/',[HomeController::class,'index'])->name('home');

@@ -7,8 +7,7 @@ use App\Models\{Category,Product};
 class HomeController extends Controller
 {
     public function index(){
-      $categories = Category::all();
-      return view('index',compact('categories'));
+      return view('index');
     }
 
     public function categoryShow($id){

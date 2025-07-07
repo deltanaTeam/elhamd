@@ -16,29 +16,28 @@
 <script  type="text/javascript" src="{{asset('select/datatable/Buttons-2.2.3/js/dataTables.buttons.min.js')}}"></script>
 
 <script  type="text/javascript" src="{{asset('select/datatable/Buttons-2.2.3/js/buttons.bootstrap4.min.js')}}"></script>
-<script  type="text/javascript" src="{{asset('/vendor/datatables/buttons.server-side.js')}}"></script>
 <!-- pdf -->
 <!-- <script  type="text/javascript" src="{{asset('select/datatable/pdfmake-0.1.36/pdfmake.min.js')}}"></script> -->
 
-<!-- <script src="{{asset('assets/plugins/custom/datatables/datatables.bundled1cf.js')}}" ></script> -->
+<script src="{{asset('assets/plugins/custom/datatables/datatables.bundled1cf.js')}}" ></script>
 <!-- <script src="{{asset('assets/js/scripts.bundled1cf.js?v=7.1.6')}}"></script> -->
 <script type="text/javascript">
-  var KTBootstrapSelect=function(){
-    var demos=function(){
-      $('.kt-selectpicker').selectpicker();
-        return
-          init: function(){
-            demos();
-          }
-        }
-      }
+  // var KTBootstrapSelect=function(){
+  //   var demos=function(){
+  //     $('.kt-selectpicker').selectpicker();
+  //       return
+  //         init: function(){
+  //           demos();
+  //         }
+  //       }
+  //     }
 
-                  jQuery(document).ready(function(){
-                    KTBootstrapSelect.init();
-                  });
+                  // jQuery(document).ready(function(){
+                  //   KTBootstrapSelect.init();
+                  // });
   ////////////////////////////////////////////////////////////////////////////////////////////////////
   </script>
-<script type="text/javascript">
+  <script type="text/javascript">
   function make_money_format(id){
    var money_input = document.getElementById(id);
    var money_value = Math.abs(money_input.value);
@@ -56,15 +55,15 @@
   function AddRowinput(){
    var count = document.getElementById("tableInputs").rows.length;
    var table = document.getElementById("tableInputs");
-    // // var options = document.getElementById("select1");
-    var selecte= document.getElementById("selectForm");
-    //
-    var first_row=document.getElementById("row_1");
-    var row = table.insertRow(count);
-     row.id="row_"+count;
-    var data=first_row.innerHTML;
-    var cell1 = row.innerHTML=data;
-    var xx = row.firstElementChild.innerHTML = selecte.innerHTML;
+  // // var options = document.getElementById("select1");
+  var selecte= document.getElementById("selectForm");
+  //
+  var first_row=document.getElementById("row_1");
+  var row = table.insertRow(count);
+   row.id="row_"+count;
+  var data=first_row.innerHTML;
+  var cell1 = row.innerHTML=data;
+  var xx = row.firstElementChild.innerHTML = selecte.innerHTML;
 
 
 
@@ -105,65 +104,65 @@
 @if(app()->getLocale() == 'ar')
 
 <script type="text/javascript">
-$(document).ready(function () {
-
-    //$(window).bind("load", function() {
-
-        if ($('.BanzinaTable').length > 0) {
-        var tableData = $('.BanzinaTable').DataTable({
-                //stateSave: true,
-
-               // processing: true,
-                //serverSide: true,
-                "language":
-        {
-            "sProcessing": "جارٍ التحميل...",
-            "sLengthMenu": "أظهر _MENU_ مدخلات",
-            "sZeroRecords": "لم يعثر على أية سجلات",
-            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-            "sInfoPostFix": "",
-            "sSearch": "ابحث:",
-            "sUrl": "",
-            "oPaginate": {
-                "sFirst": "الأول",
-                "sPrevious": "السابق",
-                "sNext": "التالي",
-                "sLast": "الأخير"
-            }
-        },
-                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-                //dom: 'lBfrtip',
-
-                initComplete: function () {
-                            this.api().columns().every( function () {
-                                var column = this;
-                                var select = $('<select class="form-control selectpicker" title=" " data-live-search="true" data-size="2"><option value=""></option></select>')
-                                    .appendTo( $(column.header()).empty() )
-                                    .on( 'change', function () {
-                                        var val = $.fn.dataTable.util.escapeRegex(
-                                            $(this).val()
-                                        );
-
-                                        column
-                                            .search( val ? '^'+val+'$' : '', true, false )
-                                            .draw();
-                                    } );
-
-                                column.data().unique().sort().each( function ( d, j ) {
-                                    select.append( '<option value="'+d+'">'+d+'</option>' )
-                                } );
-                            } );
-                        }
-
-
-            });
-        }
-    //});
-
-
-});
+// $(document).ready(function () {
+//
+//     //$(window).bind("load", function() {
+//
+//         if ($('.BanzinaTable').length > 0) {
+//         var tableData = $('.BanzinaTable').DataTable({
+//                 //stateSave: true,
+//
+//                // processing: true,
+//                 //serverSide: true,
+//                 "language":
+//         {
+//             "sProcessing": "جارٍ التحميل...",
+//             "sLengthMenu": "أظهر _MENU_ مدخلات",
+//             "sZeroRecords": "لم يعثر على أية سجلات",
+//             "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+//             "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+//             "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+//             "sInfoPostFix": "",
+//             "sSearch": "ابحث:",
+//             "sUrl": "",
+//             "oPaginate": {
+//                 "sFirst": "الأول",
+//                 "sPrevious": "السابق",
+//                 "sNext": "التالي",
+//                 "sLast": "الأخير"
+//             }
+//         },
+//                 lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+//                 //dom: 'lBfrtip',
+//
+//                 initComplete: function () {
+//                             this.api().columns().every( function () {
+//                                 var column = this;
+//                                 var select = $('<select class="form-control selectpicker" title=" " data-live-search="true" data-size="2"><option value=""></option></select>')
+//                                     .appendTo( $(column.header()).empty() )
+//                                     .on( 'change', function () {
+//                                         var val = $.fn.dataTable.util.escapeRegex(
+//                                             $(this).val()
+//                                         );
+//
+//                                         column
+//                                             .search( val ? '^'+val+'$' : '', true, false )
+//                                             .draw();
+//                                     } );
+//
+//                                 column.data().unique().sort().each( function ( d, j ) {
+//                                     select.append( '<option value="'+d+'">'+d+'</option>' )
+//                                 } );
+//                             } );
+//                         }
+//
+//
+//             });
+//         }
+//     //});
+//
+//
+// });
 
 
 ///////////////////////////////////////////////////////

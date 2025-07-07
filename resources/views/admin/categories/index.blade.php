@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', __('lang.title))
+@section('title', "jhjhkjh")
 
 @section('sub-topbar')
 <div class=" " >
@@ -15,7 +15,9 @@
 @endsection
 @section('content')
  @include('admin.style')
+ <style media="screen">
 
+ </style>
  <div class="row" dir="rtl">
    <div class="col-xxl-12 order-2 order-xxl-1">
       <!--begin::Advance Table Widget 2-->
@@ -25,23 +27,15 @@
           <div class="card-body bg-light-info">
 
             @include('admin.session')
-            <div class="table-responsive">
-              <table id="#category-table" class=" datatable table table-bordered w-100" data-url="{{ route('admin.categories.data') }}">
-    <thead>
-        <tr>
-            <th>{{__('lang.number')}}</th>
-            <th>{{__('lang.name_ar')}}</th>
-            <th>{{__('lang.name_en')}}</th>
-            <th>{{__('lang.description_ar')}}</th>
-            <th>{{__('lang.description_en')}}</th>
-            <th>{{__('lang.options')}}</th>
-        </tr>
-    </thead>
-</table>
-
-
-
-            </div>
+            @include('admin.partials.datatable', [
+                       'id' => 'category_table',
+                       'columns' => [
+                           ['title' => __('lang.order number')],
+                           ['title' => __('lang.name_en')],
+                           ['title' => __('lang.name_ar')],
+                           ['title' => __('lang.actions')],
+                       ],
+                   ])
           </div>
         </div>
     </div>
@@ -51,16 +45,17 @@
   </section>
 @endsection
 @section('script')
-@push('scripts')
-<script>
-    initDataTable('#category-table', '{{ route('admin.categories.data') }}', [
-        { data: 'id', name: 'id' },
-        { data: 'name_ar', name: 'name_ar' },
-        { data: 'name_en', name: 'name_en' },
 
-        { data: 'action', name: 'action', orderable: false, searchable: false },
-    ]);
-</script>
-@endpush
-  @include('admin.datatable')
+
+@include('admin.partials.datatable_script', [
+       'id' => 'category_table',
+       'ajax_url' => route('admin.categories.index'),
+       'datatable_columns' => [
+           ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
+           ['data' => 'name_en', 'name' => 'name_en'],
+           ['data' => 'name_ar', 'name' => 'name_ar'],
+           ['data' => 'action', 'name' => 'action', 'orderable' => false],
+       ]
+   ])
+  @include('admin.scripts')
 @endsection

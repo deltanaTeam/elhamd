@@ -1,0 +1,71 @@
+@extends('admin.layouts.master')
+@section('title', __('lang.edit categoey'))
+
+
+@section('content')
+ @include('admin.style')
+
+ <div class="row" dir="rtl">
+   <div class="col-xxl-12 order-2 order-xxl-1">
+      <!--begin::Advance Table Widget 2-->
+      <div class="card card-custom card-stretch gutter-b p-2 bg-light-info border border-light">
+          <!--begin::Header-->
+          <div class="cart-header p-5 bg-warning rounded  m-5">
+            <b  class="text-light  font-weight-bolder  h3 align-items-center ">
+              {{__('lang.edit category')}}
+            </b>
+          </div>
+          <div class="card-body bg-light-info">
+
+
+            @include('admin.session')
+            <form action="{{ route('admin.categories.update',$category->id) }}" method="POST" class="row">
+                @csrf
+                @method('PUT')
+                <div class="mb-3 col-md-6 form-group2">
+                    <label class="block">{{__('lang.name_en')}} <span class="required">*</span> :</label>
+                    <input type="text" name="name_en" class="form-control " value="{{old('name_en',$category->getTranslations('name')['en']??'')}}">
+
+                </div>
+                <div class="mb-3 col-md-6 form-group2">
+                    <label class="block">{{__('lang.name_ar')}} <span class="required">*</span> :</label>
+                    <input type="text" name="name_ar" class="form-control " value="{{old('name_ar',$category->getTranslations('name')['ar']??'')}}">
+                </div>
+
+                <div class="mb-3 col-md-6 form-group2">
+                    <label class="block">{{__('lang.description_en')}} <span class="required">*</span> :</label>
+                    <input type="text" name="description_en" class="form-control " value="{{old('description_en',$category->getTranslations('description')['en']??'')}}">
+
+                </div>
+                <div class="mb-3 col-md-6 form-group2">
+                    <label class="block">{{__('lang.description_ar')}} <span class="required">*</span> :</label>
+                    <input type="text" name="description_ar" class="form-control " value="{{old('description_ar',$category->getTranslations('description')['ar']??'')}}">
+                </div>
+                <div class="form-group2 col-md-12">
+                 <label for=""> {{__('lang.main category')}}  :</label>
+                 <select class="form-control" name="parent_id">
+                   <option value=""></option>
+
+                   @forelse($categories as $cat)
+                     <option value="{{$cat->id}}" {{old('branch',$category->parent_id??'') == $cat->id?'selected':''}}>{{$cat->name}}</option>
+                   @empty
+                     <option value="">{{__('lang.no category')}}</option>
+                   @endforelse
+                 </select>
+               </div>
+
+                <div class="col-9"></div>
+
+                <div class="col-3"><button type="submit" class="btn btn-warning btn-block"><i class="fas fa-edit"></i>{{__('lang.Save')}}</button></div>
+            </form>
+          </div>
+        </div>
+    </div>
+ </div>
+
+
+  </section>
+@endsection
+@section('script')
+  @include('admin.scripts')
+@endsection

@@ -34,7 +34,12 @@
             id=""
             class="hidden sm:!block text-gray-500 pe-2 dark:!text-gray-400"
           >
-            <option value="-1" selected>{{__('lang.all categories')}}</option>
+            <option value="-1" class="capitalize" selected>{{__('lang.all categories')}}</option>
+            @forelse($categories as $cate)
+            <option value="{{$cate->id}}"  class="capitalize">{{$cate->name}}</option>
+
+            @empty
+            @endforelse
           </select>
           <input
             type="text"

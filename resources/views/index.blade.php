@@ -11,7 +11,12 @@
       <div
         class=" hidden lg:!flex justify-between items-center gap-4 text-sm lg:text-sm xl:text-base xl:gap-6 2xl:gap-8 py-3 text-white dark:!text-gray-300"
       >
-        <a href="" class="whitespace-nowrap">صحة الجهاز التنفسي</a>
+      @forelse($categories as $cate)
+      <a href="{{route('category.show',$cate->id)}}" class="whitespace-nowrap capitalize">{{$cate->name}}</a>
+
+      @empty
+      @endforelse
+        <!-- <a href="" class="whitespace-nowrap">صحة الجهاز التنفسي</a>
         <a href="" class="whitespace-nowrap">رعاية العين والأذن</a>
         <a href="" class="whitespace-nowrap">صحة القلب</a>
         <a href="" class="whitespace-nowrap">رعاية الأطفال والرضع</a>
@@ -19,7 +24,7 @@
         <a href="" class="whitespace-nowrap">الإسعافات الأولية</a>
         <a href="" class="whitespace-nowrap">صحة الجهاز الهضمي</a>
         <a href="" class="whitespace-nowrap">رعاية مرضى السكري</a>
-        <a href="" class="whitespace-nowrap">تخفيف الألم</a>
+        <a href="" class="whitespace-nowrap">تخفيف الألم</a> -->
       </div>
       <!-- End Categories List -->
     </div>
