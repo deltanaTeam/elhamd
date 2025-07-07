@@ -225,17 +225,20 @@
                 <div class="collapse-title font-semibold">{{__('lang.catrgories')}}</div>
                 <div class="collapse-content">
                   <ul class="menu">
-                    @forelse($categories as $category)
-                    <li>
-                      <a
-                        class="menu-item rounded-full"
-                        href="/pages/profile/account"
-                      >
-                        <p>{{$category->name}}</p>
-                      </a>
-                    </li>
-                    @empty
-                    @endforelse
+  @forelse($categories as $category)
+    <li>
+      <a class="menu-item rounded-full" href="/pages/profile/account">
+        <p>{{ $category->name }}</p>
+      </a>
+    </li>
+@empty
+    <li>
+      <a class="menu-item rounded-full" href="#">
+        <p>لا توجد تصنيفات</p>
+      </a>
+    </li>
+@endforelse
+
                     <!-- <li>
                       <a
                         class="menu-item rounded-full"
