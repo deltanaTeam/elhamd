@@ -10,11 +10,11 @@ class HomeController extends Controller
       return view('index');
     }
 
-    public function categoryShow($id){
-      $category = Category::findOrFail($id);
-      $products = $category->products;
-      return "category {$category ->name}";
-    }
+    // public function categoryShow($id){
+    //   $category = Category::findOrFail($id);
+    //   $products = $category->products;
+    //   return "category {$category ->name}";
+    // }
 
     public function getContact(){
       return "contact us";
