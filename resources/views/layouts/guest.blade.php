@@ -15,9 +15,10 @@
     @vite([
     'resources/css/app.css',
      'resources/src/style.css',
+     'resources/src/assets/css/vars.css',
+     'resources/src/assets/css/fonts.css',
      'resources/src/assets/css/containers.css',
      'resources/src/assets/css/custom.css',
-     'resources/src/assets/css/fonts.css',
      'resources/src/assets/css/main.css',
      'resources/src/assets/css/rtl.css',
      'resources/src/assets/css/styles.css',

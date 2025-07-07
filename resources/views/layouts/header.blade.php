@@ -195,7 +195,7 @@
           >
             <button
               @click="showMobileMenu = !showMobileMenu"
-              class="cursor-pointer absolute top-3 left-4 text-gray-400 dark:text-stone-300"
+              class="cursor-pointer absolute top-3 !end-4 text-gray-400 dark:text-stone-300"
             >
               <span class="material-icons">close</span>
             </button>
