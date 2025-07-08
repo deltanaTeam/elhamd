@@ -13,13 +13,21 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete('cascade');
+
             $table->string('name');
-            $table->string('image');
+
+            $table->string('scientific_name')->nullable();
+
+            $table->string('type');// دواء او مكمل
+            $table->string('form');  // اقراص - شراب
+            $table->string('dose')->nullable();
+
             $table->text('description')->nullable();
-            $table->decimal('price',10,2);
-            $table->integer('stock');
+            $table->text('instructions')->nullable();
+
+
+
 
             $table->timestamps();
         });
