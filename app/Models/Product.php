@@ -30,20 +30,12 @@ class Product extends Model
        return $this->belongsTo(Brand::class);
    }
 
-   public function pharmacies()
-   {
-       return $this->belongsToMany(Pharmacy::class, 'pharmacy_products')
-           ->withPivot('price', 'quantity')
-           ->withTimestamps();
-   }
-
    public function pharmacyProducts()
    {
        return $this->hasMany(PharmacyProduct::class);
    }
 
-   public function favoredByUsers()
-   {
-       return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
-   }
+
+
+
 }
