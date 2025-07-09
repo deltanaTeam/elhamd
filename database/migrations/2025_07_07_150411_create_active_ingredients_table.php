@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        Schema::create('ingredient_product', function (Blueprint $table) {
+        Schema::create('ingredient_master_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('master_product_id')->constrained()->onDelete('cascade');
             $table->foreignId('active_ingredient_id')->constrained()->onDelete('cascade');
-
+            $table->string('amount')->nullable();// ;كمية المادة الفعالة 500 mg
             $table->timestamps();
         });
     }
@@ -30,7 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ingredient_product');
+        Schema::dropIfExists('ingredient_master_product');
 
         Schema::dropIfExists('active_ingredients');
     }

@@ -52,6 +52,10 @@ class CategoryController extends Controller
           $category ->setTranslation('description', 'en',$request->description_en );
           $category ->setTranslation('description', 'ar',$request->description_ar );
           $category->parent_id = $request->parent_id;
+          if ($request->hasFile('image')) {
+            $path = $this->storeImage($file);
+            $category->image =$path ;
+          }
           $category->save();
           return CategoryResource($category)->additional(JsonResponse::success());
        } catch (Exception $e) {
@@ -62,10 +66,9 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
         try {
-          $category = Category::findOrFail($id);
           return CategoryResource($category)->additional(JsonResponse::success());
 
         } catch (Exception $e) {
@@ -76,10 +79,9 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
         try {
-          $category = Category::findOrFail($id);
           return CategoryResource($category)->additional(JsonResponse::success());
 
         } catch (Exception $e) {
@@ -90,15 +92,19 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, string $id)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $try {
-            $category =  Category::findOrFail($id);
             $category ->setTranslation('name', 'en',$request->name_en );
             $category ->setTranslation('name', 'ar',$request->name_ar );
             $category ->setTranslation('description', 'en',$request->description_en );
             $category ->setTranslation('description', 'ar',$request->description_ar );
             $category->parent_id = $request->parent_id;
+            if ($request->hasFile('image')) {
+              $path = $this->storeImage($file);
+              $this->deleteFile($category->image);
+              $category->image =$path ;
+            }
             $category->save();
             return CategoryResource($category)->additional(JsonResponse::success());
          } catch (Exception $e) {
@@ -109,14 +115,15 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
 
         try
          {
-            $category = Category::findOrFail($id);
             if(!$category->children)
             {
+              $this->deleteFile($category->image);
+
               $category->delete();
               return JsonResponse::respondSuccess("deleted successfully");
             }

@@ -28,6 +28,8 @@ class StoreCategoryRequest extends FormRequest
           'description_en' => ['nullable', 'string', 'max:255'],
           'description_ar' => ['nullable', 'string', 'max:255'],
           'parent_id' => ['nullable', 'exists:categories,id'],
+          'image' => ['nullable','image','mimes:jpeg,png,jpg,webp', 'max:3072'],
+
         ];
     }
 }

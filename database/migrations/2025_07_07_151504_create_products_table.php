@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pharmacy_products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_code_id')->constrained()->onDelete('cascade');
+            // $table->morphs('owner'); لبسيوني
             $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
-
-            $table->foreignId('manufacturer_id')->nullable()->constrained()->nullOnDelete('cascade');
 
             $table->decimal('price',10,2);
             $table->decimal('tax_rate',5,2);
@@ -24,16 +23,14 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
 
             $table->integer('min_stock')->default(0);
-            $table->integer('stock_quantity')->default(0);
+            $table->integer('quantity')->default(0);
 
             $table->string('batch_number');
             $table->string('storage_conditions')->nullable();
-            $table->string('barcode')->nullable();
             $table->boolean('prescription_required')->default(false);
 
             $table->date('production_date')->nullable();
             $table->date('expiry_date')->nullable();
-            $table->integer('quantity');
 
             $table->timestamps();
         });
@@ -44,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('batches');
+        Schema::dropIfExists('products');
     }
 };

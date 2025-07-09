@@ -12,7 +12,6 @@ class Product extends Model
   use HasMedia;
 
   protected $table = 'products';
-  public $translatable = ['name'];
 
    protected $with = [
        'media',
@@ -20,20 +19,22 @@ class Product extends Model
 
    protected $guarded = ['id'];
 
-   public function categories()
+   // public function owner()
+   // {
+   //     return $this->morphTo();
+   // }
+
+   public function code()
    {
-       return $this->belongsToMany(Category::class);
+       return $this->belongsTo(ProductCode::class);
    }
 
-   public function brand()
+   public function pharmacy()
    {
-       return $this->belongsTo(Brand::class);
+       return $this->belongsTo(Pharmacy::class);
    }
 
-   public function pharmacyProducts()
-   {
-       return $this->hasMany(PharmacyProduct::class);
-   }
+
 
 
 

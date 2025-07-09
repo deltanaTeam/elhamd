@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pharmacies', function (Blueprint $table) {
+        Schema::create('brand_suggestions', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('pharmacist_id')->constrained()->onDelete('cascade');
             $table->string('name');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('logo_path');
-            $table->decimal('location_lat',10,6);
-            $table->decimal('location_lng',10,6);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pharmacies');
+        Schema::dropIfExists('brand_suggestions');
     }
 };

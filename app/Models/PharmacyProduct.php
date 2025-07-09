@@ -13,9 +13,5 @@ class PharmacyProduct extends Model
       return $this->belongsTo(Pharmacy::class);
   }
 
-  public function manufacturer()
-  {
-      return $this->belongsTo(Manufacturer::class);
-  }
 
 }

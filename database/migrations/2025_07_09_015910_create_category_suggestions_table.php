@@ -11,24 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('category_suggestions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('brand_id')->nullable()->constrained()->nullOnDelete('cascade');
-
             $table->string('name');
-
-            $table->string('scientific_name')->nullable();
-
-            $table->string('type');// دواء او مكمل
-            $table->string('form');  // اقراص - شراب
-            $table->string('dose')->nullable();
-
+            $table->integer('parent_id')->nullable();
             $table->text('description')->nullable();
-            $table->text('instructions')->nullable();
-
-
-
-
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('category_suggestions');
     }
 };

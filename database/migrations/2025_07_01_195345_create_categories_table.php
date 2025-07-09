@@ -17,14 +17,11 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
 
             $table->text('description')->nullable();
+            $table->string('image')->nullable();
+
             $table->timestamps();
         });
-        Schema::create('category_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('category_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-        });
+
     }
 
     /**
