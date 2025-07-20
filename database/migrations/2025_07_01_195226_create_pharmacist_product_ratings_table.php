@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pharmacist_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->tinyInteger('rate');
-            $table->text('rate_text');
+            $table->tinyInteger('rate')->unsigned()->comment('1 to 5');
+
+            $table->text('rate_text')->nullable();
+
+            $table->unique(['pharmacist_id', 'product_id']);
+
             $table->timestamps();
         });
     }

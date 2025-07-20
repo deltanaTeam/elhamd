@@ -2,138 +2,131 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Http\Requests\{StoreCategoryRequest,UpdateCategoryRequest};
-use App\Http\Resources\Admin\CategoryResource;
-use App\Traits\DesignButton;
 use App\Helpers\JsonResponse;
+use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
+use App\Interfaces\CategoryRepositoryInterface;
+use App\Models\Category;
 use Exception;
-class CategoryController extends Controller
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class CategoryController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected mixed $crudRepository;
+
+    public function __construct(CategoryRepositoryInterface $pattern)
+    {
+        $this->crudRepository = $pattern;
+    }
 
     public function index()
     {
-
-      try {
-           return CategoryResource::collection(Category::latest()->get())->additional(JsonResponse::success());
-       } catch (Exception $e) {
-           return JsonResponse::respondError($e->getMessage());
-       }
-
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-      try {
-           return CategoryResource::collection(Category::select('id','name')->get())->additional(JsonResponse::success());
-       } catch (Exception $e) {
-           return JsonResponse::respondError($e->getMessage());
-       }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCategoryRequest $request)
-    {
-      try {
-          $category = new Category;
-          $category ->setTranslation('name', 'en',$request->name_en );
-          $category ->setTranslation('name', 'ar',$request->name_ar );
-          $category ->setTranslation('description', 'en',$request->description_en );
-          $category ->setTranslation('description', 'ar',$request->description_ar );
-          $category->parent_id = $request->parent_id;
-          if ($request->hasFile('image')) {
-            $path = $this->storeImage($file);
-            $category->image =$path ;
-          }
-          $category->save();
-          return CategoryResource($category)->additional(JsonResponse::success());
-       } catch (Exception $e) {
-           return JsonResponse::respondError($e->getMessage());
-       }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
         try {
-          return CategoryResource($category)->additional(JsonResponse::success());
-
+            return CategoryResource::collection($this->crudRepository->all())->additional(JsonResponse::success());
         } catch (Exception $e) {
             return JsonResponse::respondError($e->getMessage());
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
+
+    public function show(Category $category): ?\Illuminate\Http\JsonResponse
     {
         try {
-          return CategoryResource($category)->additional(JsonResponse::success());
-
+            return JsonResponse::respondSuccess('Item fetched successfully', new CategoryResource($category));
         } catch (Exception $e) {
             return JsonResponse::respondError($e->getMessage());
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function store(CategoryRequest $request)
     {
-        $try {
-            $category ->setTranslation('name', 'en',$request->name_en );
-            $category ->setTranslation('name', 'ar',$request->name_ar );
-            $category ->setTranslation('description', 'en',$request->description_en );
-            $category ->setTranslation('description', 'ar',$request->description_ar );
-            $category->parent_id = $request->parent_id;
-            if ($request->hasFile('image')) {
-              $path = $this->storeImage($file);
-              $this->deleteFile($category->image);
-              $category->image =$path ;
+        try {
+            $category = $this->crudRepository->create($request->validated());
+            if (request('image') !== null) {
+                $this->crudRepository->AddMediaCollection('image', $category);
             }
-            $category->save();
-            return CategoryResource($category)->additional(JsonResponse::success());
-         } catch (Exception $e) {
-             return JsonResponse::respondError($e->getMessage());
-         }
+            return new CategoryResource($category);
+        } catch (Exception $e) {
+            return JsonResponse::respondError($e->getMessage());
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
+
+    public function update(CategoryRequest $request, Category $category): ?\Illuminate\Http\JsonResponse
     {
+        try {
+            $this->crudRepository->update($request->validated(), $category->id);
 
-        try
-         {
-            if(!$category->children)
-            {
-              $this->deleteFile($category->image);
+            $category = Category::find($category->id);
+            $this->crudRepository->AddMediaCollection('image', $category);
 
-              $category->delete();
-              return JsonResponse::respondSuccess("deleted successfully");
-            }
-            return JsonResponse::respondError("deleted successfully");
-          }
-          catch (Exception $e)
-          {
-            return JsonResponse::respondError('category has subcategories');
-          }
-
+            activity()->performedOn($category)->withProperties(['attributes' => $category])->log('update');
+            return JsonResponse::respondSuccess(trans(JsonResponse::MSG_UPDATED_SUCCESSFULLY), null);
+        } catch (Exception $e) {
+            return JsonResponse::respondError($e->getMessage());
+        }
     }
-    ////////////////////////////////////////////////
+
+    public function destroy(Request $request): ?\Illuminate\Http\JsonResponse
+    {
+        try {
+            $this->crudRepository->deleteRecords('categories', $request['items']);
+            return JsonResponse::respondSuccess(trans(JsonResponse::MSG_DELETED_SUCCESSFULLY));
+        } catch (Exception $e) {
+            return JsonResponse::respondError($e->getMessage());
+        }
+    }
+
+    public function restore(Request $request): \Illuminate\Http\JsonResponse
+    {
+        try {
+            $this->crudRepository->restoreItem(Category::class, $request['items']);
+            return JsonResponse::respondSuccess(trans(JsonResponse::MSG_RESTORED_SUCCESSFULLY));
+        } catch (Exception $e) {
+            return JsonResponse::respondError($e->getMessage());
+        }
+    }
+
+
+
+
+    public function forceDelete(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'items' => 'required|array',
+            'items.*' => 'integer|exists:teams,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation Error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        try {
+            $items = $request->input('items');
+
+            // Fetch the soft-deleted items
+            $softDeletedItems = Category::withTrashed()
+                ->whereIn('id', $items)
+                ->whereNotNull('deleted_at')
+                ->get();
+
+            if ($softDeletedItems->isEmpty()) {
+                return response()->json([
+                    'message' => "One or more records do not exist or are not soft deleted. Please refresh the page."
+                ], 404);
+            }
+
+            // Force delete the soft-deleted items
+            foreach ($softDeletedItems as $item) {
+                $item->forceDelete();
+            }
+
+            return JsonResponse::respondSuccess(trans(JsonResponse::MSG_FORCE_DELETED_SUCCESSFULLY));
+        } catch (Exception $e) {
+            return JsonResponse::respondError($e->getMessage());
+        }
+    }
 }

@@ -1,39 +1,55 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('auth.guest')
+@section('title',  __('lang.password_reset'))
+@section('content')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+    <div class="login-content">
+      <div class="login-form-content">
+        @include('session')
+        <a href="{{route('login')}}" class="forget-link mb-30">
+          @if(app()->getLocale() == 'ar')
+          <i class="fa-light fa-chevron-right"></i>
+          @else
+          <i class="fa-light fa-chevron-left"></i>
+          @endif
+         {{ __('lang.back')}}
+         </a>
+        <h2 class="services-title fs-30 ">
+           {{ __('lang.password_reset')}}
+          </h2>
+          <span class="login-note">
+            <!-- يرجى إدخال التفاصيل -->
+            {{ __('lang.update password')}}
+          </span>
+          <form class="login-form-2" method="POST" action="{{ route('password.store') }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+          <label class="form-label">
+            {{ __('lang.email')}}
+          </label>
+          <input type="email" class="form-input" placeholder=" robertfox@example.com" name="email" value="{{old('email', $request->email)}}" >
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+          <label class="form-label">
+           {{ __('lang.password')}}
+          </label>
+          <input type="password"  name="password" class="form-input" placeholder="  ........... " >
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+          <label class="form-label">
+           {{ __('lang.confirm_password')}}
+          </label>
+          <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" placeholder="  ........... " >
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
+          <button type="submit" class="reserve-link ">
+              {{ __('lang.Reset Password') }}
+          </button>
+          </form>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+      </div>
+      <div class="login-img">
+        <img class="img-responsive" src="{{asset('site/images/register.png')}}" alt="register image">
+      </div>
+    </div>
+
+
+@endsection

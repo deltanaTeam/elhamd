@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->decimal('price',10,2);
-            $table->decimal('discount',10,2);
-            $table->decimal('subtotal',10,2);
+            $table->decimal('discount', 10, 2)->default(0);
+            $table->decimal('subtotal', 10, 2)->default(0);
+            $table->decimal('total', 10, 2)->default(0);
             $table->integer('quantity')->default(1);
-            $table->decimal('total',10,2);
-
+            $table->foreignId('offer_id')->nullable()->constrained()->nullOnDelete();
 
             $table->timestamps();
         });

@@ -16,9 +16,16 @@ class CategoryResource extends JsonResource
     {
         return [
           'id' => $this->id ,
-          'name' => $this->getTranslation('name',app()->getLocale()) ,
-          'description' => $this->when(isset($this->description),$this->getTranslation('description',app()->getLocale())),
-          'parent_id'=> $this->when(isset($this->parent_id),$this->parent_id)
+          'position' => $this->position ,
+          'name_ar' => $this->getTranslation('name',"ar") ,
+          'name_en' => $this->getTranslation('name',"en") ,
+          'show_home' => $this->show_home,
+          'imageUrl' => $this->getFirstMediaUrlTeam(),
+          'image' => new MediaResource($this->getFirstMedia()),
+          'createdAt' => $this->created_at ? $this->created_at->format('Y-M-d H:i:s A') : null,
+          'updatedAt' => $this->updated_at ? $this->updated_at->format('Y-M-d H:i:s A') : null,
+          'deletedAt' => $this->deleted_at ? $this->deleted_at->format('Y-M-d H:i:s A') : null,
+          'deleted' => isset($this->deleted_at),
 
         ];
     }

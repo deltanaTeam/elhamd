@@ -28,7 +28,6 @@ class UpdateCategoryRequest extends FormRequest
         'name_ar' => ['required', 'string', 'max:100',Rule::unique('categories','name->ar')->ignore($id)],
         'description_en' => ['nullable', 'string', 'max:255'],
         'description_ar' => ['nullable', 'string', 'max:255'],
-        'parent_id' => ['nullable', 'exists:categories,id'],
         'image' => ['nullable','image','mimes:jpeg,png,jpg,webp', 'max:3072'],
 
       ];

@@ -20,11 +20,9 @@ return new class extends Migration
           $table->softDeletes();
           $table->timestamp('email_verified_at')->nullable();
           $table->string('firebase_uid')->nullable()->unique();
-          $table->foreignId('pharmacy_id')->nullable();
           $table->timestamp('last_login_at')->nullable();
           $table->text('address')->nullable();
-          $table->string('phone')->nullable()->unique();
-          $table->string('image')->nullable();
+          $table->string('phone')->nullable();
 
           $table->boolean('is_verified')->default(true);
           $table->rememberToken();

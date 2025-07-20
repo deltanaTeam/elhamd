@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->string('path');
+            $table->string('name');
+            $table->string('file_name');
+            $table->string('file_path')->nullable();
+            $table->string('mime_type');
+            $table->integer('size');
+            $table->unsignedBigInteger('author_id')->nullable();
+            $table->string('disk')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -23,6 +30,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('mediable');
+
         Schema::dropIfExists('media');
     }
 };

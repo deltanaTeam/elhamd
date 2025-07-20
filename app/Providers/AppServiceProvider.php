@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(125);
-        $categories = Category::whereNull('parent_id')->select('id','name')->limit(9)->get();
-        View::share('categories',$categories);
+      //  $categories = Category::whereNull('parent_id')->select('id','name')->limit(9)->get();
+      //  View::share('categories',$categories);
     }
 }

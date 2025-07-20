@@ -18,12 +18,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\PersonalAccessToken;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasApiTokens, HasMedia, SoftDeletes;
+     use LogsActivity;
     /**
      * The attributes that are mass assignable.
      *
@@ -52,5 +55,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['name', 'email']) // عدّلي حسب الأعمدة اللي تحبي تراقبيها
+            ->useLogName('user')
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 }

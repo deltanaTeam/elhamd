@@ -41,18 +41,31 @@
                     <label class="block">{{__('lang.description_ar')}} <span class="required">*</span> :</label>
                     <input type="text" name="description_ar" class="form-control " value="{{old('description_ar',$category->getTranslations('description')['ar']??'')}}">
                 </div>
-                <div class="form-group2 col-md-12">
-                 <label for=""> {{__('lang.main category')}}  :</label>
-                 <select class="form-control" name="parent_id">
-                   <option value=""></option>
+                <div class="mb-3 col-md-12 form-group2">
+                    <label class="block">{{__('lang.position')}} <span class="required">*</span> :</label>
+                    <input type="number" name="position" class="form-control " value="{{ old('position') }}">
+                </div>
 
-                   @forelse($categories as $cat)
-                     <option value="{{$cat->id}}" {{old('branch',$category->parent_id??'') == $cat->id?'selected':''}}>{{$cat->name}}</option>
-                   @empty
-                     <option value="">{{__('lang.no category')}}</option>
-                   @endforelse
-                 </select>
-               </div>
+                <div class="mb-3 col-md-6 form-group2">
+                    <label class="Banzima-check-container">
+
+                       {{ __('lang.active')}}
+
+                      <input type="checkbox" name="active" value="is_active"  id="is_active">
+                      <span class="banzima-check-checkmark"></span>
+                    </label>
+                 </div>
+
+                 <div class="mb-3 col-md-6 form-group2">
+                     <label class="Banzima-check-container">
+
+                        {{ __('lang.show_home')}}
+
+                       <input type="checkbox" name="show_home" value="show_home"  id="show_home">
+                       <span class="banzima-check-checkmark"></span>
+                     </label>
+                  </div>
+
 
                 <div class="col-9"></div>
 

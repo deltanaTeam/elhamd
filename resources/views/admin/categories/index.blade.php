@@ -33,6 +33,12 @@
                            ['title' => __('lang.order number')],
                            ['title' => __('lang.name_en')],
                            ['title' => __('lang.name_ar')],
+                           ['title' => __('lang.reason')],
+                           ['title' => __('lang.status')],
+                           ['title' => __('lang.show_home')],
+                           ['title' => __('lang.active')],
+                           ['title' => __('lang.position')],
+
                            ['title' => __('lang.actions')],
                        ],
                    ])
@@ -54,6 +60,13 @@
            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
            ['data' => 'name_en', 'name' => 'name_en'],
            ['data' => 'name_ar', 'name' => 'name_ar'],
+           ['data' => 'reason', 'name' => 'reason'],
+           ['data' => 'status', 'name' => 'status'],
+           ['data' => 'show_home', 'name' => 'show_home'],
+
+           ['data' => 'active', 'name' => 'active'],
+           ['data' => 'position', 'name' => 'position'],
+
            ['data' => 'action', 'name' => 'action', 'orderable' => false],
        ]
    ])

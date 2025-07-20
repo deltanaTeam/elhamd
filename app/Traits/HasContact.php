@@ -4,33 +4,41 @@ namespace App\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Exception;
+
+use App\Helpers\JsonResponse;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\{ContactFrom,ContactTo};
-use App\Traits\HttpResponses;
-use App\Models\Contact;
 trait HasContact
 {
-  use HttpResponses;
+  protected $guard = 'web';
 
   ////////////////////////////////////////////////////////////////////////////////
-  public function contact( $request, $modelClass )
+  public function contact( $request, $modelClass,$guard )
   {
-      $user = auth()->user();
+      $user = auth($guard)->user();
 
       if (!$user) {
-          return $this->error(null, "Unauthenticated",  401);
+
+        return JsonResponse::respondError('Unauthenticated',401);
       }
       $data = $request->validate([
           'name' => ['required', 'string', 'max:255'],
           'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
           'message' => ['required', 'string', 'max:255'],
+
       ]);
-      $data['contactable_type'] = $modelClass ;
-      $data['contactable_id'] = $user->id;
-      $contact = Contact::create($data);
-      Mail::to($data['email'])->send(new ContactFrom($contact));
-      Mail::to("zeinabagban93@gmail.com")->send(new ContactTo($contact));
-      return $this->success($contact, "contact information sent successfully",  200);
+      try {
+          $data['contactable_type'] = $modelClass ;
+          $data['contactable_id'] = $user->id;
+          $contact = Contact::create($data);
+          Mail::to($data['email'])->send(new ContactFrom($contact));
+          Mail::to(config('mail.admin.address'))->send(new ContactTo($contact));
+          return JsonResponse::respondSuccess('Your Contact sent Successfully');
+      } catch (Exception $e) {
+          return JsonResponse::respondError($e->getMessage());
+      }
 
   }
 
