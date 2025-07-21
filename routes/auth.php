@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Product\ProductController;
+
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -56,4 +58,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+});
+
+
+Route::prefix('products')->name('products.')->group(function () {
+    Route::get('/', [ProductController::class, 'index'])->name('index');
+    Route::post('/', [ProductController::class, 'store'])->name('store');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('show');
+    Route::put('/{product}', [ProductController::class, 'update'])->name('update');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
 });

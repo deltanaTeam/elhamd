@@ -1,5 +1,5 @@
 <?php
-namespace App\Trait;
+namespace App\Traits;
 use Carbon\Carbon;
 
 use DateTime;
