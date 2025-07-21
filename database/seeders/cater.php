@@ -11,8 +11,13 @@ class cater extends Seeder
     public function run(): void
     {
         DB::table('categories')->insert([
-            ['name' => 'إلكترونيات', 'parent_id' => 0, 'description' => 'كل ما يخص الإلكترونيات', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'ملابس', 'parent_id' => 0, 'description' => 'أحدث صيحات الملابس', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'إلكترونيات',  'reason' => 'كل ما يخص الإلكترونيات', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'ملابس', 'reason' => 'أحدث صيحات الملابس', 'created_at' => now(), 'updated_at' => now()],
+        ]);
+
+        DB::table('brands')->insert([
+            ['name' => 'hp',  'reason' => 'كل ما يخص الإلكترونيات', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'gucci', 'reason' => 'أحدث صيحات الملابس', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 }

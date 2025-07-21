@@ -8,4 +8,9 @@ class UserProductRating extends Model
 {
   protected $table = 'user_product_ratings';
 
+  public function user()
+  {
+      return $this->belongsTo(User::class);
+  }
+
 }

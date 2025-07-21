@@ -13,18 +13,36 @@ return new class extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->text('description');
-            $table->enum('type',['discount','extra']);
-            $table->enum('discount_type',['percentage','fixed']);
-            $table->decimal('value',10,2);
-            $table->integer('min_quantity')->default(1); // for type buy get
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->boolean('is_active')->default(true);
-            $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
-            $table->string('image')->nullable();
+
+              // المنتج المرتبط بالعرض
+              $table->foreignId('product_id')->constrained()->onDelete('cascade');
+
+              // عنوان ووصف العرض
+              $table->string('title')->nullable();
+              $table->text('description')->nullable();
+
+              // نوع العرض: خصم أو عرض إضافي
+              $table->enum('type', ['discount', 'extra'])->default('discount');
+
+              // نوع الخصم: نسبة أو مبلغ ثابت
+              $table->enum('discount_type', ['percentage', 'fixed'])->default('percentage');
+
+              // قيمة الخصم أو العرض
+              $table->decimal('value', 10, 2);
+
+              // للعرض الإضافي (مثلاً: اشتري 2 واحصل على 1 مجانًا)
+              $table->integer('min_quantity')->default(1);
+
+              // المدة الزمنية
+              $table->date('start_date')->nullable();
+              $table->date('end_date')->nullable();
+
+              // تفعيل/تعطيل العرض
+              $table->boolean('is_active')->default(true);
+
+              // الصيدلية المالكة للعرض
+              $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
+
 
             $table->timestamps();
         });

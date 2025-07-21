@@ -2,28 +2,27 @@
 
 namespace App\Models;
 
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
-  use HasTranslations;
-  protected $table = 'categories';
-  protected $fillable = ['name','description','parent_id','image'];
-  public $translatable = ['name','description'];
+   use HasMedia ,SoftDeletes;
+   use HasTranslations;
+   protected $with = [
+       'media',
+    ];
+    public $translatable = ['name'];
 
-  public function products()
-  {
-      return $this->belongsToMany(Product::class);
-  }
+    protected $casts = [
+        'active' => 'boolean',
+        'show_home' => 'boolean',
+    ];
+    protected $guarded = ['id'];
 
-  public function parent()
-  {
-      return $this->belongsTo(self::class,'parent_id');
-  }
-  public function children()
-  {
-      return $this->hasMany(self::class,'parent_id');
-  }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

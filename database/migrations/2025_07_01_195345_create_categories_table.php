@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('parent_id')->nullable();
-
-            $table->text('description')->nullable();
-            $table->string('image')->nullable();
+            $table->string('name')->nullable();
+            $table->integer('position')->nullable();
+            $table->boolean('active')->default(1);
+            $table->boolean('show_home')->default(1);
+            $table->softDeletes();
+            $table->enum('status',['pending','approved','rejected','admin_insert'])->default("pending");
+            $table->text('reason')->nullable();
 
             $table->timestamps();
         });

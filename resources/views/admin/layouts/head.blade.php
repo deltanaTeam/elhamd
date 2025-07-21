@@ -19,6 +19,7 @@
     <!--end::Fonts-->
 
     @if(app()->getLocale() == 'ar')
+
 {{--RTL--}}
       <link href="{{ asset('assets/plugins/custom/fullcalendar/fullcalendar.bundle.rtld1cf.css?v=7.1.6') }}" rel="stylesheet"  type="text/css"/>
       <link href="{{ asset('assets/plugins/global/plugins.bundle.rtld1cf.css?v=7.1.6') }}" rel="stylesheet" type="text/css"/>
@@ -30,7 +31,7 @@
       <link href="{{ asset('assets/css/themes/layout/aside/dark.rtld1cf.css?v=7.1.6') }}" rel="stylesheet" type="text/css"/>
   @else
 {{--LTR--}}
-
+khkyllkhl
       <link href="{{asset('assets/plugins/custom/fullcalendar/fullcalendar.bundled1cf.css?v=7.1.6')}}" rel="stylesheet" type="text/css"/>
       <link href="{{asset('assets/plugins/global/plugins.bundled1cf.css?v=7.1.6" rel="stylesheet')}}" rel="stylesheet" type="text/css" />
       <link href="{{asset('assets/plugins/custom/prismjs/prismjs.bundled1cf.css?v=7.1.6')}}" rel="stylesheet" type="text/css"/>

@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Interfaces\Interfaces;
+namespace App\Interfaces;
 
 interface ICrudRepository
 {

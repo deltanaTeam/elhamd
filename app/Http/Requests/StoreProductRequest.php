@@ -8,6 +8,8 @@ class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
+     * @return bool
      */
     public function authorize(): bool
     {
@@ -17,12 +19,26 @@ class StoreProductRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
-            //
+            'product_code_id' => 'required|exists:product_codes,id',
+            'pharmacy_id' => 'required|exists:pharmacies,id',
+            'price' => 'required|numeric|min:0',
+            'tax_rate' => 'required|numeric|min:0',
+            'is_featured' => 'boolean',
+            'is_active' => 'boolean',
+            'min_stock' => 'integer|min:0',
+            'quantity' => 'integer|min:0',
+            'batch_number' => 'required|string|max:255',
+            'storage_conditions' => 'nullable|string',
+            'prescription_required' => 'boolean',
+            'production_date' => 'nullable|date',
+            'expiry_date' => 'nullable|date|after:production_date',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 }

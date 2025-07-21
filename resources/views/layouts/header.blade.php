@@ -35,11 +35,7 @@
             class="hidden sm:!block text-gray-500 pe-2 dark:!text-gray-400"
           >
             <option value="-1" class="capitalize" selected>{{__('lang.all categories')}}</option>
-            @forelse($categories as $cate)
-            <option value="{{$cate->id}}"  class="capitalize">{{$cate->name}}</option>
 
-            @empty
-            @endforelse
           </select>
           <input
             type="text"
@@ -225,19 +221,16 @@
                 <div class="collapse-title font-semibold">{{__('lang.catrgories')}}</div>
                 <div class="collapse-content">
                   <ul class="menu">
-  @forelse($categories as $category)
     <li>
       <a class="menu-item rounded-full" href="/pages/profile/account">
-        <p>{{ $category->name }}</p>
+        <p>jkhjhjhjhj</p>
       </a>
     </li>
-@empty
     <li>
       <a class="menu-item rounded-full" href="#">
         <p>لا توجد تصنيفات</p>
       </a>
     </li>
-@endforelse
 
                     <!-- <li>
                       <a

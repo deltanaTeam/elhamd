@@ -10,31 +10,63 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pharmacy\Web\PharmacistAuthController  ;
 use App\Http\Controllers\Product\ProductController;
 
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+
+
+
+
+
+  Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+  {
+
+    Route::get('register', [PharmacistAuthController::class, 'showRegisterForm'])
         ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register', [PharmacistAuthController::class, 'register']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    Route::get('login', [PharmacistAuthController::class, 'showLoginForm'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('login', [PharmacistAuthController::class, 'login']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    Route::get('forgot-password', [PharmacistAuthController::class, 'showForgotPasswordForm'])
         ->name('password.request');
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    Route::post('forgot-password', [PharmacistAuthController::class, 'forgotPassword'])
         ->name('password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    Route::get('reset-password/{token}', [PharmacistAuthController::class, 'showResetPasswordForm'])
         ->name('password.reset');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
+    Route::post('reset-password', [PharmacistAuthController::class, 'resetPassword'])
         ->name('password.store');
+
+});
+    // Route::get('register', [RegisteredUserController::class, 'create'])
+    //     ->name('register');
+    //
+    // Route::post('register', [RegisteredUserController::class, 'store']);
+    //
+    // Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    //     ->name('login');
+    //
+    // Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    //
+    // Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    //     ->name('password.request');
+    //
+    // Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    //     ->name('password.email');
+    //
+    // Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    //     ->name('password.reset');
+    //
+    // Route::post('reset-password', [NewPasswordController::class, 'store'])
+    //     ->name('password.store');
 });
 
 Route::middleware('auth')->group(function () {

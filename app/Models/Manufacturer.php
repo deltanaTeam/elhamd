@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Manufacturer extends Model
+class Manufacturer extends BaseModel
 {
     protected $fillable = ["name","country"];
 
-    public function masterProducts()
+    public function products()
     {
-        return $this->hasMany(MasterProduct::class);
+        return $this->hasMany(Product::class);
     }
 }

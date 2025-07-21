@@ -15,14 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->enum('type',['coupon','auto','personal','buy_get']);
+            $table->enum('type',['auto','personal','buy_get']);
             $table->enum('discount_type',['percentage','fixed']);
-            $table->string('code')->nullable()->unique();//for type coupon
 
             $table->decimal('discount_value',10,2);
-            $table->decimal('min_order_amount',10,2)->nullable();//for tyoe auto
-            $table->integer('usage_limit')->nullable();
-            $table->integer('usage_per_user')->nullable(); //للمستخد الواحد
             $table->integer('buy_quantity')->nullable();// for type buy get
             $table->integer('get_quantity')->nullable(); // for type buy get
 

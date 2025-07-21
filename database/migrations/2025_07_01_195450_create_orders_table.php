@@ -19,9 +19,10 @@ return new class extends Migration
             $table->decimal('subtotal',10,2);
             $table->decimal('order_discount',10,2);
             $table->decimal('total',10,2);
-            $table->decimal('paid_from_wallet',10,2);
-            $table->decimal('paid_by_card',10,2);
-            $table->boolean('is_paid')->nullable();
+            $table->decimal('paid_from_wallet', 10, 2)->default(0);
+            $table->decimal('paid_by_card', 10, 2)->default(0);
+            $table->boolean('is_paid')->default(false);
+            $table->foreignId('coupon_id')->nullable()->constrained()->nullOnDelete();
 
             $table->enum('payment_type',['wallet','cash','card','zain','deferred']);
             $table->date('due_date');
