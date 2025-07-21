@@ -15,31 +15,34 @@ use App\Http\Controllers\BaseController;
 class CartController extends BaseController
 {
 
-    protected mixed $crudRepository;
 
-    public function __construct(CartRepositoryInterface $pattern)
-    {
-        $this->crudRepository = $pattern;
-    }
     /**
      * Display a listing of the resource.
      */
 
     public function index()
     {
-        $user = auth('client')->user();
-
+        $cart = Cart::firstOrCreate([
+                    'user_id' => auth('client')->id();
+                ]);
         try {
-            $cart = $this->crudRepository->all(
-                with: ['items.pharmacyProduct.pharmacy', 'items.pharmacyProduct.offer'],
-                conditions: ['user_id' => $user->id]
-            )->first();
+           $cart->load('items.product.offer');
+
+           $items = CartItemResource::collection($cart->items);
 
             if (!$cart || $cart->items->isEmpty()) {
                 return JsonResponse::respondError('Cart is empty');
             }
-
-            return (new CartResource($cart))->additional(JsonResponse::success());
+            $summary = [
+                'subtotal' => $cart->items->sum('final_price'),
+                'tax'      => $cart->items->sum('tax_amount'),
+                'total'    => $cart->items->sum('total')
+            ];
+            $data =[
+                'cart'    => $items,
+                'summary' => $summary
+            ];
+            return JsonResponse::respondSuccess("cart get successfully",$data);
 
         } catch (Exception $e) {
             return JsonResponse::respondError($e->getMessage());
@@ -56,7 +59,7 @@ class CartController extends BaseController
          $user = auth('client')->user();
 
          $validator = Validator::make($request->all(), [
-             'product_id' => 'required|exists:pharmacy_products,id',
+             'product_id' => 'required|exists:products,id',
              'quantity' => 'required|integer|min:1',
          ]);
 

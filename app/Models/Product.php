@@ -12,7 +12,7 @@ class Product extends BaseModel
   use HasMedia;
 
   protected $table = 'products';
-  public $translatable = ['name','generic_name'];
+  public $translatable = ['name','description','type','form'];
    protected $with = [
        'media',
    ];
@@ -70,7 +70,25 @@ class Product extends BaseModel
    }
 
 
+   public function getUserRatingAvgAttribute()
+   {
+       return round($this->ratings()->avg('rate'), 2);
+   }
 
+   public function getPharmacistRatingAvgAttribute()
+   {
+       return round($this->pharmacistRatings()->avg('rate'), 2);
+   }
+
+   public function getTaxValueAttribute()
+  {
+      return ($this->price * $this->tax_rate) / 100;
+  }
+
+  public function getPriceWithTaxAttribute()
+  {
+      return $this->price + $this->tax_value;
+  }
 
 
 }

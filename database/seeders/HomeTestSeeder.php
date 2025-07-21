@@ -35,8 +35,11 @@ class HomeTestSeeder extends Seeder
 
         foreach (range(1, 20) as $i) {
             $product = Product::create([
-                'name'        => $faker->word . ' ' . $i,
-                'description' => $faker->sentence,
+                'name->ar'        => $faker->word . ' ar' . $i,
+                'name->en'        => $faker->word . ' en ' . $i,
+                'generic_name' => $faker->word ."KLM" .$i ,
+                'description->ar'        => $faker->sentence . ' ar' . $i,
+                'description->en'        => $faker->sentence . ' en ' . $i,
                 'price'       => $faker->randomFloat(2, 50, 500),
                 'active'      => true,
                 'show_home'   => true,
@@ -44,12 +47,16 @@ class HomeTestSeeder extends Seeder
                 'brand_id'    => $brands->random()->id,
                 'category_id' => $categories->random()->id,
                 'pharmacy_id' => 1,
-                'type'        => 'دواء',
-                'form'        => 'أقراص',
+                'type->ar'    =>  'دواء',
+                'type->en'    => 'medicine',
+
+                'form->ar'        => 'أقراص',
+                'form->en'        => 'tablets ',
+
                 'strength'    => '500mg',
                 'tax_rate'    => 5,
                 'min_stock'   => 10,
-                'quantity'    => 100,
+                'quantity'    => 100 *$i,
                 'batch_number'=> strtoupper($faker->bothify('BN###??')),
                 'production_date' => now()->subMonths(rand(1, 12)),
                 'expiry_date'     => now()->addMonths(rand(6, 24)),

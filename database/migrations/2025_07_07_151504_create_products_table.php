@@ -43,7 +43,7 @@ return new class extends Migration
 
             $table->string('pack_size')->nullable();
 
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->integer('position')->nullable();
 
 

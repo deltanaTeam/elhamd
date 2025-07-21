@@ -2,10 +2,13 @@
 
 namespace App\Http\Resources;
 use App\Http\Resources\MediaResource;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\PharmacistProductRatingResource;
+use App\Http\Resources\UserProductRatingResource;
+use App\Http\Resources\OfferProductResource;
+use App\Http\Resources\ProductResource;
 class ProductDetailResource extends JsonResource
 {
     /**
@@ -19,19 +22,16 @@ class ProductDetailResource extends JsonResource
           'id' => $this->id,
           'name_ar' => $this->getTranslation('name',"ar") ,
           'name_en' => $this->getTranslation('name',"en") ,
-          'generic_name_ar' => $this->getTranslation('generic_name',"ar") ,
-          'generic_name_ar' => $this->getTranslation('generic_name',"en") ,
+          'generic_name' => $this->generic_name,
           'type' => $this->type ,
           'form' => $this->form ,
           'strength' => $this->strength ,
           'price' => round($this->price, 2) ,
+          'average_rating' => [
+              'user' => round($this->ratings_avg_rate, 2),
+              'pharmacist' => round($this->pharmacist_ratings_avg_rate, 2),
+          ],
           'tax_rate' => $this->tax_rate ,
-          'is_featured' => $this->is_featured ,
-          'min_stock' => $this->min_stock ,
-          'quantity' => $this->quantity ,
-          'batch_number' => $this->batch_number ,
-          'storage_conditions' => $this->storage_conditions ,
-          'prescription_required' => $this->prescription_required ,
           'production_date' => $this->production_date ,
           'expiry_date' => $this->expiry_date ,
           'barcode' => $this->barcode ,
@@ -45,10 +45,23 @@ class ProductDetailResource extends JsonResource
           'imageUrl' => $this->getFirstMediaUrlTeam(),
           'image' => new MediaResource($this->getFirstMedia()),
           'gallery' => $this->getMediaResource('gallery') ?: null,
-          'createdAt' => $this->created_at ? $this->created_at->format('Y-M-d H:i:s A') : null,
-          'updatedAt' => $this->updated_at ? $this->updated_at->format('Y-M-d H:i:s A') : null,
-          'deletedAt' => $this->deleted_at ? $this->deleted_at->format('Y-M-d H:i:s A') : null,
-          'deleted' => isset($this->deleted_at),
+          'offer'         => $this->offer ? new OfferResource($this) : null,
+             'imageUrl'      => $this->getFirstMediaUrl(),
+
+             'user_rating_avg'       => round($this->ratings->avg('rate'), 2),
+             'pharmacist_rating_avg' => round($this->pharmacistRatings->avg('rate'), 2),
+
+             'user_comments' => UserProductRatingResource::collection($this->ratings),
+             'pharmacist_comments' => PharmacistProductRatingResource::collection($this->pharmacistRatings),
+
+             'similar_products' => ProductResource::collection(
+                 Product::where('id', '!=', $this->id)
+                     ->where('category_id', $this->category_id)
+                     ->where('active', true)
+                     ->take(6)
+                     ->get()
+             )
+
       ];
     }
 }

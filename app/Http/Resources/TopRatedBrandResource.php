@@ -17,7 +17,10 @@ class TopRatedBrandResource extends JsonResource
       return [
           'brand_id'        => $this->id,
           'name'            => $this->name,
-          'average_rating'  => round($this->average_rating, 1),
+          'average_rating' => [
+              'user' => round($this->ratings_avg_rate, 2),
+              'pharmacist' => round($this->pharmacist_ratings_avg_rate, 2),
+          ],
           'products_count'  => $this->products_count,
           'imageUrl' => $this->getFirstMediaUrlTeam(),
           'image' => new MediaResource($this->getFirstMedia()),
