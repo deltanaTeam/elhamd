@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\Api\HomeController  ;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\API\ProductRatingController;
       
 
 use App\Http\Controllers\Product\ProductController;
@@ -44,3 +45,10 @@ Route::middleware('guest')->group(function () {
 //     Route::put('/{product}', [ProductController::class, 'update'])->name('update');
 //     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');
 // });
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('products/{product}/ratings', [ProductRatingController::class, 'store']);
+    Route::get('products/{product}/ratings', [ProductRatingController::class, 'index']);
+});

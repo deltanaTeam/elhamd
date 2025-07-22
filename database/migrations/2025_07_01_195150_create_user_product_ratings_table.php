@@ -19,8 +19,12 @@ return new class extends Migration
             $table->text('rate_text')->nullable();
             $table->timestamps();
             $table->unique(['user_id', 'product_id']);
+         $table->unsignedInteger('ratings_count')->default(0)->index();
+    $table->decimal('average_rating', 3, 2)->default(0)->index();
+    $table->json('rating_breakdown')->nullable()->comment('{"1":0,"2":0,"3":0,"4":0,"5":0}');
 
         });
+        
     }
 
     /**

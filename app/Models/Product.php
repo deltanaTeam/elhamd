@@ -53,10 +53,7 @@ class Product extends BaseModel
        return $this->belongsTo(Pharmacy::class);
    }
 
-   public function ratings()
-   {
-       return $this->hasMany(UserProductRating::class);
-   }
+ 
 
    // تقييمات الصيادلة
    public function pharmacistRatings()
@@ -85,6 +82,12 @@ class Product extends BaseModel
       return ($this->price * $this->tax_rate) / 100;
   }
 
+  
+
+
+
+
+  
   public function getPriceWithTaxAttribute()
   {
       return $this->price + $this->tax_value;
@@ -97,6 +100,31 @@ class Product extends BaseModel
 // }
 
 
+
+public function ratings()
+{
+    return $this->hasMany(ProductRating::class);
+}
+
+public function approvedRatings()
+{
+    return $this->ratings()->where('is_approved', true);
+}
+
+public function recalculateRatings()
+{
+    $approvedRatings = $this->approvedRatings();
+    
+    $this->update([
+        'ratings_count' => $approvedRatings->count(),
+        'average_rating' => $approvedRatings->avg('rating'),
+        'rating_breakdown' => $approvedRatings
+            ->selectRaw('rating, count(*) as count')
+            ->groupBy('rating')
+            ->pluck('count', 'rating')
+            ->toArray()
+    ]);
+}
 
 
 
