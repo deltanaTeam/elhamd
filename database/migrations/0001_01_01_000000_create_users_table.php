@@ -17,7 +17,7 @@ return new class extends Migration
           $table->string('last_name');
           $table->string('email')->unique();
           $table->string('password');
-          $table->tinyInteger('age')->unsigned();
+          $table->tinyInteger('age')->unsigned()->nullable();
           $table->enum('gender',['male','female']);
 
           $table->softDeletes();

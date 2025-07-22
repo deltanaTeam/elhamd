@@ -14,9 +14,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-
-
-
 class ProductController extends Controller
 {
     /**
@@ -33,7 +30,7 @@ class ProductController extends Controller
         $cacheKey = "products.page.{$page}.per_page.{$perPage}";
 
         $products = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($perPage) {
-            return Product::with(['productCode', 'pharmacy', 'images'])
+            return Product::with(['pharmacy'])
                 ->orderBy('created_at', 'desc')
                 ->paginate($perPage);
         });
@@ -52,8 +49,11 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try {
+            // Create the product using validated data
             $product = Product::create($request->validated());
 
+            // Commented the image handling for now
+            /*
             if ($request->has('images')) {
                 foreach ($request->images as $image) {
                     $path = $image->store('product_images', 'public');
@@ -63,12 +63,14 @@ class ProductController extends Controller
                     ]);
                 }
             }
+            */
 
+            // Commit the transaction
             DB::commit();
 
             return response()->json([
                 'message' => 'Product created successfully',
-                'data' => new ProductResource($product->load(['productCode', 'pharmacy', 'images']))
+                'data' => new ProductResource($product->load(['brand', 'category', 'manufacturer', 'pharmacy'])) // Exclude images here
             ], 201);
 
         } catch (\Exception $e) {
@@ -91,7 +93,7 @@ class ProductController extends Controller
         $cacheKey = "product.{$product->id}";
 
         $product = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($product) {
-            return $product->load(['productCode', 'pharmacy', 'images']);
+            return $product->load(['pharmacy']); // Exclude images here for now
         });
 
         return new ProductResource($product);
@@ -111,11 +113,12 @@ class ProductController extends Controller
         try {
             $product->update($request->validated());
 
-            // Handle image updates if needed
+            // Commented the image handling for now
+            /*
             if ($request->has('images')) {
                 // Delete old images if needed
                 $product->images()->delete();
-                
+
                 foreach ($request->images as $image) {
                     $path = $image->store('product_images', 'public');
                     ProductImage::create([
@@ -124,7 +127,9 @@ class ProductController extends Controller
                     ]);
                 }
             }
+            */
 
+            // Commit the transaction
             DB::commit();
 
             // Clear cache
@@ -132,7 +137,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'message' => 'Product updated successfully',
-                'data' => new ProductResource($product->fresh(['productCode', 'pharmacy', 'images']))
+                'data' => new ProductResource($product->fresh(['brand', 'category', 'manufacturer', 'pharmacy'])) // Exclude images here
             ]);
 
         } catch (\Exception $e) {
@@ -155,9 +160,9 @@ class ProductController extends Controller
         DB::beginTransaction();
 
         try {
-            $product->images()->delete();
             $product->delete();
 
+            // Commit the transaction
             DB::commit();
 
             // Clear cache

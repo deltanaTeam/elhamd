@@ -52,11 +52,3 @@ require __DIR__.'/auth.php';
 use App\Http\Controllers\Product\ProductController;
 
 
-// مسارات المنتجات
-Route::prefix('products')->name('products.')->group(function () {
-    Route::get('/', [ProductController::class, 'index'])->name('index');  // لعرض جميع المنتجات
-    Route::post('/', [ProductController::class, 'store'])->name('store');  // لإضافة منتج جديد
-    Route::get('/{product}', [ProductController::class, 'show'])->name('show');  // لعرض منتج معين
-    Route::put('/{product}', [ProductController::class, 'update'])->name('update');  // لتحديث منتج معين
-    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('destroy');  // لحذف منتج
-});

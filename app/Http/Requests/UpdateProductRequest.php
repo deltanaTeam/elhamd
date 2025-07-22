@@ -26,6 +26,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'product_code_id' => 'sometimes|exists:product_codes,id',
             'pharmacy_id' => 'sometimes|exists:pharmacies,id',
+            'name' => 'required|string|max:255',
             'price' => 'sometimes|numeric|min:0',
             'tax_rate' => 'sometimes|numeric|min:0',
             'is_featured' => 'sometimes|boolean',

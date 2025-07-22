@@ -34,6 +34,7 @@ class HomeTestSeeder extends Seeder
         $products = collect();
 
         foreach (range(1, 20) as $i) {
+            
             $product = Product::create([
                 'name->ar'        => $faker->word . ' ar' . $i,
                 'name->en'        => $faker->word . ' en ' . $i,

@@ -17,9 +17,9 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-<<<<<<< HEAD
-            'product_code' => $this->productCode,
-            'pharmacy' => $this->pharmacy,
+            // 'product_code' => $this->productCode,
+            'name' => $this->name,
+            'pharmacy' => new PharmacyResource($this->pharmacy), 
             'price' => $this->price,
             'tax_rate' => $this->tax_rate,
             'is_featured' => $this->is_featured,
@@ -31,26 +31,11 @@ class ProductResource extends JsonResource
             'prescription_required' => $this->prescription_required,
             'production_date' => $this->production_date,
             'expiry_date' => $this->expiry_date,
-            'images' => $this->images,
+            'images' => $this->getMedia('images')->map(function ($media) {
+                return $media->getUrl();  // استرجاع رابط الصورة
+            }),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-=======
-            'name_ar' => $this->getTranslation('name',"ar") ,
-            'name_en' => $this->getTranslation('name',"en") ,
-            'generic_name' => $this->generic_name,
-            'position' => $this->position,
-            'active' => $this->active,
-            'price' => round($this->price, 2),
-            'is_featured' => $this->is_featured ,
-            'show_home' => $this->show_home,
-            'average_rating' => [
-                'user' => round($this->ratings_avg_rate, 2),
-                'pharmacist' => round($this->pharmacist_ratings_avg_rate, 2),
-            ],
-            'imageUrl' => $this->getFirstMediaUrlTeam(),
-            'image' => new MediaResource($this->getFirstMedia()),
-
->>>>>>> 69d2a7c008f6b2107a416cfcf2fa1251506f8b70
         ];
     }
 }

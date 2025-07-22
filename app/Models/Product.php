@@ -89,6 +89,15 @@ class Product extends BaseModel
   {
       return $this->price + $this->tax_value;
   }
+// public function productCode()
+// {
+//     return $this->hasOne(ProductCode::class); 
+
+
+// }
+
+
+
 
 
 }

@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
      $user->tokens()->delete();
      $usertoken = $user->createToken('client-token')->plainTextToken;
      $this->call([
+      BrandsTableSeeder::class,
+      CategoriesTableSeeder::class,
+      PharmacySeeder::class,
+      UserWithTokenSeeder::class,
         cater::class,HomeTestSeeder::class
     ]);
     }

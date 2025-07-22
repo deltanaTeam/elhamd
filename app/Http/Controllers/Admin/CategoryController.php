@@ -42,15 +42,6 @@ class CategoryController extends BaseController
     public function store(CategoryRequest $request)
     {
         try {
-            $category ->setTranslation('name', 'en',$request->name_en );
-            $category ->setTranslation('name', 'ar',$request->name_ar );
-            $category ->setTranslation('description', 'en',$request->description_en );
-            $category ->setTranslation('description', 'ar',$request->description_ar );
-            $category->parent_id = $request->parent_id;
-            if ($request->hasFile('image')) {
-              $path = $this->storeImage($file);
-              $this->deleteFile($category->image);
-              $category->image =$path ;
             $category = $this->crudRepository->create($request->validated());
             if (request('image') !== null) {
                 $this->crudRepository->AddMediaCollection('image', $category);
