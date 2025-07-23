@@ -67,6 +67,19 @@
 
                          </li>
                            <li class="menu-item mx-5" aria-haspopup="true" data-menu-toggle="hover">
+                             @if(Auth::guard('pharmacist'))
+                             <form class="" action="{{route('pharmacist.logout')}}" method="POST">
+                               @csrf
+                               <button type="submit"  class="btn btn-sm text-white menu-link menu-toggle px-5 mx-5 ">
+
+
+                                 <i class="menu-bullet menu-bullet-line">
+                                                                     </i>
+                                   <span class="menu-text mx-5">{{__('lang.logout')}}</span>
+
+                               </button>
+                             </form>
+                             @elseif(Auth::guard('web-owner'))
                              <form class="" action="{{route('logout')}}" method="POST">
                                @csrf
                                <button type="submit"  class="btn btn-sm text-white menu-link menu-toggle px-5 mx-5 ">
@@ -78,6 +91,7 @@
 
                                </button>
                              </form>
+                             @endif
                            </li>
                        </ul>
                    </div>
@@ -192,7 +206,7 @@
                         <ul class="menu-subnav">
 
 
-              
+
 
                             <li class="menu-item " aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{route('admin.point-settings.index')}}" class="menu-link  ">

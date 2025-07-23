@@ -1,14 +1,22 @@
 <?php
-
-namespace App\Http\Controllers\Owner\Web;
+namespace App\Http\Controllers\Pharmacy\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Owner;
 use App\Traits\WebAuth;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Owner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\URL;
+use App\Notifications\VerifyEmailCustom;
+use App\Notifications\OwnerResetPasswordNotification;
 
-class OwnerAuthController extends Controller
+class PharmacistAuthController extends Controller
 {
   use WebAuth;
 
@@ -18,22 +26,22 @@ class OwnerAuthController extends Controller
   }
   public function showLoginForm()
   {
-      return view('auth.login');
+      return view('owner.auth.login');
   }
 
-  // public function showRegisterForm()
-  // {
-  //     return view('auth.register');
-  // }
+  public function showRegisterForm()
+  {
+      return view('owner.auth.register');
+  }
 
   public function showForgotPasswordForm()
   {
-      return view('auth.forgot-password');
+      return view('owner.auth.forgot-password');
   }
 
   public function showResetPasswordForm(Request $request, $token)
   {
-      return view('auth.reset-password', [
+      return view('owner.auth.reset-password', [
           'token' => $token,
           'email' => $request->email,
       ]);
@@ -49,14 +57,27 @@ class OwnerAuthController extends Controller
       return $this->publicLogin($request);
   }
 
-  public function forgotPassword(Request $request)
+  public function forgotPassword(Request $request )
   {
-      return $this->publicForgotPassword($request);
+    $request->validate(['email' => 'required|email']);
+
+    $user = Password::broker("owner")->getUser($request->only('email'));
+
+    if (!$user) {
+        return back()->withErrors(['email' => __('No user found with that email address.')]);
+    }
+
+    $token = Password::broker("owner")->createToken($user);
+
+    $user->notify(new PharmacistResetPasswordNotification($token, $user->email));
+
+    return back()->with('status', 'We have emailed your password reset link!');
+    //  return $this->publicForgotPassword($request ,'pharmacist');
   }
 
   public function resetPassword(Request $request)
   {
-      return $this->publicResetPassword($request);
+      return $this->publicResetPassword($request ,'owner') ;
   }
 
   public function invokeEmail(Request $request, $id, $hash)
@@ -73,5 +94,6 @@ class OwnerAuthController extends Controller
   {
       return $this->publicLogout($request);
   }
+
 
 }

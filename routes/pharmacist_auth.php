@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -13,12 +12,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pharmacy\Web\PharmacistAuthController  ;
 
-<<<<<<< HEAD
-
-=======
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
->>>>>>> 58bd366 (add order)
 Route::middleware('guest')->group(function () {
 
 
@@ -47,13 +42,13 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth:pharmacist')->group(function () {
+  Route::get('/pharmacist/email/verify', function () {
+    return view('pharmacist.auth.verify-email');
+})->middleware('auth:pharmacist')->name('verification.notice');
   Route::get('pharmacist/verify-email/{id}/{hash}',[PharmacistAuthController::class, 'invokeEmail'])->middleware(['signed'])->name('pharmacist.verification.verify');
-  Route::post('/email-resend', [PharmacistAuthController::class, 'resentEmail'])->middleware('auth:client');
+  Route::post('pharmacist/email-resend', [PharmacistAuthController::class, 'resentEmail'])->name('pharmacist.verification.send');
+  Route::post('pharmacist/logout', [PharmacistAuthController::class, 'logout'])->name('pharmacist.logout');
 
 });
 
 });
-
-
-=======
->>>>>>> 8ed2815 (show order)

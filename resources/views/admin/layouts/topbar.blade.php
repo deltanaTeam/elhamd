@@ -14,8 +14,19 @@
                 <div
                     class="btn btn-icon  w-auto btn-clean d-flex align-items-center btn-lg px-2"
                     >
-                     <span  class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1"> @guest username  @endguest @auth <a class="btn " href="{{route('admin.profile.edit')}}">{{auth()->user()->name}}</a> @endauth</span>
-                </div>
+                    <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
+                      @if(auth('pharmacist')->check())
+                        <a class="btn" href="{{ route('admin.profile.edit') }}">
+                            {{ auth('pharmacist')->user()->name }}
+                        </a>
+                      @elseif(auth('web-owner')->check())
+
+                      @else
+                      username
+                      @endif
+
+                    </span>
+                  </div>
             </div>
 
 

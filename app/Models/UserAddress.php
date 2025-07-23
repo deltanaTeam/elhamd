@@ -13,4 +13,15 @@ class UserAddress extends Model
   {
       return $this->belongsTo(User::class);
   }
+
+  public function getFullAddressAttribute()
+  {
+      return implode(' - ', array_filter([
+          $this->name,
+          $this->building,
+          $this->area,
+          $this->city,
+          "Tel: {$this->phone}"
+      ]));
+  }
 }

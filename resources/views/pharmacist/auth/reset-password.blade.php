@@ -23,14 +23,14 @@
         </div>
         <form method="POST" action="{{ route('pharmacist.password.store') }}" class="p-4 rounded login-form-2">
   @csrf
-  <input type="hidden" name="token" value="{{ $request->route('token') }}">
+  <input type="hidden" name="token" value="{{ $token }}">
 
   <div class="form-group">
       <label class="text-light">{{ __('lang.email') }}</label>
       <input type="email" name="email"
              class="form-control bg-dark text-white border-secondary"
              placeholder="robertfox@example.com"
-             value="{{ old('email', $request->email) }}">
+             value="{{ old('email', $email) }}">
   </div>
 
   <div class="form-group">

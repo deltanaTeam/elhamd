@@ -58,7 +58,7 @@ class Cart extends Model
  //        'type'   => $coupon->discount_type,
  //        'coupon' => $coupon
  //    ];
-}
+
 
 
 

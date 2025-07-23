@@ -5,6 +5,17 @@ use App\Http\Controllers\Controller;
 use App\Traits\WebAuth;
 use App\Models\Pharmacist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\URL;
+use App\Notifications\VerifyEmailCustom;
+use App\Notifications\PharmacistResetPasswordNotification;
+
 class PharmacistAuthController extends Controller
 {
   use WebAuth;
@@ -15,22 +26,22 @@ class PharmacistAuthController extends Controller
   }
   public function showLoginForm()
   {
-      return view('pharmacist.login');
+      return view('pharmacist.auth.login');
   }
 
   public function showRegisterForm()
   {
-      return view('pharmacist.register');
+      return view('pharmacist.auth.register');
   }
 
   public function showForgotPasswordForm()
   {
-      return view('pharmacist.forgot-password');
+      return view('pharmacist.auth.forgot-password');
   }
 
   public function showResetPasswordForm(Request $request, $token)
   {
-      return view('pharmacist.reset-password', [
+      return view('pharmacist.auth.reset-password', [
           'token' => $token,
           'email' => $request->email,
       ]);
@@ -46,14 +57,27 @@ class PharmacistAuthController extends Controller
       return $this->publicLogin($request);
   }
 
-  public function forgotPassword(Request $request)
+  public function forgotPassword(Request $request )
   {
-      return $this->publicForgotPassword($request);
+    $request->validate(['email' => 'required|email']);
+
+    $user = Password::broker("pharmacist")->getUser($request->only('email'));
+
+    if (!$user) {
+        return back()->withErrors(['email' => __('No user found with that email address.')]);
+    }
+
+    $token = Password::broker("pharmacist")->createToken($user);
+
+    $user->notify(new PharmacistResetPasswordNotification($token, $user->email));
+
+    return back()->with('status', 'We have emailed your password reset link!');
+    //  return $this->publicForgotPassword($request ,'pharmacist');
   }
 
   public function resetPassword(Request $request)
   {
-      return $this->publicResetPassword($request);
+      return $this->publicResetPassword($request ,'pharmacist') ;
   }
 
   public function invokeEmail(Request $request, $id, $hash)

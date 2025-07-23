@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-      
+
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
 
-            $table->decimal('balance',10,2);
-            $table->integer('point_balance');
+            $table->decimal('balance',10,2)->default(0);
+            $table->integer('point_balance')->default(0);
+            $table->unique(['user_id', 'pharmacy_id']);
 
             $table->timestamps();
         });

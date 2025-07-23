@@ -13,7 +13,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
 
 
-  Route::prefix('admin')->name('admin.')->group(function(){
+  Route::middleware('auth:pharmacist','verified')->prefix('admin')->name('admin.')->group(function(){
     Route::get('dashboard',[AdminHomeController::class,'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::resource('categories',AdminCategoryController::class);
@@ -37,28 +37,23 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
   // Route::get('/category/{id}',[HomeController::class,'categoryShow'])->name('category.show');
 
 
-});
 
 
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-// Route::get('/',[HomeController::class,'index'])->name('home');
 
-Route::middleware('auth:web')->group(function () {
-  Route::get('/jjkk',function(){
-    return "jgkrg666666666";
-  })->name('hojjjjkjkme');
+
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
-
+require __DIR__.'/pharmacist_auth.php';
+require __DIR__.'/owner_auth.php';
 
  Route::get('/produect/filter', [App\Http\Controllers\produect\filter::class, 'index'])->name('produect.filter');
 

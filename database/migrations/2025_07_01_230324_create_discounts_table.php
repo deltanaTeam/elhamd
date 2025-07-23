@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->enum('type',['auto','personal','buy_get']);
             $table->enum('discount_type',['percentage','fixed']);
 
             $table->decimal('discount_value',10,2);
-            $table->integer('buy_quantity')->nullable();// for type buy get
-            $table->integer('get_quantity')->nullable(); // for type buy get
 
             $table->date('start_date');
             $table->date('end_date');
@@ -30,24 +27,7 @@ return new class extends Migration
 
             $table->timestamps();
         });
-        // Schema::create('discount_product', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('discount_id')->constrained()->onDelete('cascade');
-        //     $table->foreignId('product_id')->constrained()->onDelete('cascade');
-        //
-        // });
-        // Schema::create('discount_category', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('discount_id')->constrained()->onDelete('cascade');
-        //     $table->foreignId('category_id')->constrained()->onDelete('cascade');
-        //
-        // });
-        //
-        // Schema::create('discount_all_order', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('discount_id')->constrained()->onDelete('cascade');
-        //
-        // });
+
 
     }
 
@@ -56,9 +36,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('discount_all_order');
-        Schema::dropIfExists('discount_product');
-        Schema::dropIfExists('discount_category');
+  
         Schema::dropIfExists('discounts');
     }
 };

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('master_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->decimal('total',10,2);
+            $table->decimal('total',10,2)->default(0);
             $table->enum('status',['pending','confirmed','returned','shipped','delivered','cancelled'])->default('pending');
-
+            $table->timestamp('confirmed_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });
     }

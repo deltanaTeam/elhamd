@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use App\Notifications\VerifyEmailCustom;
+use App\Notifications\ResetPasswordTokenNotification;
 
 trait WebAuth
 {
@@ -51,14 +52,15 @@ trait WebAuth
 
         Auth::guard($this->guard)->login($user);
 
-        return redirect()->route('admin.dashboard')->with('success', __('lang.register_successfully'));
+        return redirect('admin/dashboard')->with('success', __('lang.register_successfully'));
     }
 
     public function publicLogin(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $remember = $request->filled('remember');
 
-        if (!Auth::guard($this->guard)->attempt($credentials)) {
+        if (!Auth::guard($this->guard)->attempt($credentials, $remember)) {
             throw ValidationException::withMessages([
                 'email' => [ __('lang.login_data_not_correct')]
             ]);
@@ -71,7 +73,7 @@ trait WebAuth
             return redirect()->back()->withErrors(['email' =>  __('lang.MSG_EMAIL_NOT_VERIFIED')]);
         }
 
-        return redirect()->intended('admin.dashboard');
+        return redirect()->intended('admin/dashboard');
     }
 
     public function publicLogout(Request $request)
@@ -80,7 +82,7 @@ trait WebAuth
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('success', __('lang.msg_logout_successfully'));
+        return redirect($this->guard.'/login')->with('success', __('lang.msg_logout_successfully'));
     }
 
     public function publicForgotPassword(Request $request, $broker = null)

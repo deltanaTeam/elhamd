@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal('price',10,2);
             $table->decimal('discount', 10, 2)->default(0);
             $table->decimal('subtotal', 10, 2)->default(0);
+            $table->decimal('tax_amount', 10, 2)->default(0);
+
             $table->decimal('total', 10, 2)->default(0);
             $table->integer('quantity')->default(1);
             $table->foreignId('offer_id')->nullable()->constrained()->nullOnDelete();

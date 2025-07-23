@@ -25,6 +25,10 @@ return new class extends Migration
             $table->foreignId('coupon_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('coupon_discount', 10, 2)->default(0);
             $table->unsignedInteger('earned_points')->default(0);
+            $table->decimal('tax', 10, 2)->default(0);
+            $table->decimal('order_taxes', 10, 2)->default(0);
+            $table->decimal('total_discount', 10, 2)->default(0);
+
 
             $table->foreignId('shipping_id')->nullable()->constrained()->onDelete('set null');
             $table->decimal('shipping_cost', 10, 2)->default(0);

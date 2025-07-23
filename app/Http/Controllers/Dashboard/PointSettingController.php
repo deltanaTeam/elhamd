@@ -15,7 +15,6 @@ class PointSettingController extends Controller
 
         return DataTables::of(PointSetting::get())
             ->addIndexColumn()
-
             ->addColumn('action', fn($row) => $this->showButtons($row->id) ) // حطي هنا الزر أو ال view
             ->rawColumns(['action'])
             ->make(true);

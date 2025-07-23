@@ -11,8 +11,12 @@ use App\Http\Controllers\Pharmacy\Api\PharmacyProductController;
 =======
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
+<<<<<<< HEAD
 use App\Http\Controllers\Client\Api\{HomeController,CartController ,ClientAuthController}  ;
 >>>>>>> 58bd366 (add order)
+=======
+use App\Http\Controllers\Client\Api\{HomeController,CartController ,OrderController,ClientAuthController}  ;
+>>>>>>> 8ed2815 (show order)
 
 RateLimiter::for('medications_limiter', function ($request) {
        return Limit::perMinute(1)->by(optional($request->user())->id ?: $request->ip());
@@ -23,6 +27,7 @@ Route::get('/filter-products',[HomeController::class,'filterProducts'])->name('f
 Route::get('/search',[HomeController::class,'searchProducts'])->name('search');
 Route::get('/products/show/{id}',[HomeController::class,'showProduct'])->name('products.show');
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 Route::middleware('auth:sanctum')->prefix('product')->group(function () {
@@ -60,6 +65,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 =======
 Route::middleware(['guest:client', 'throttle:medications_limiter'])->group(function () {
+=======
+Route::middleware(['guest:client'])->group(function () {
+>>>>>>> 8ed2815 (show order)
 
       Route::post('/register', [ClientAuthController::class, 'register']);
       Route::post('/login', [ClientAuthController::class, 'login']);
@@ -78,5 +86,9 @@ Route::middleware(['auth:client', 'verified.api'])->group(function () {
       ->name('logout');
   Route::get('/cart',[CartController::class,'index'])->name('cart.index');
   Route::post('/add-to-cart',[CartController::class,'store'])->name('cart.store');
+  Route::post('/save-orders',[OrderController::class,'store'])->name('orders.store');
+  Route::get('/user-orders',[OrderController::class,'index'])->name('orders.index');
+  Route::get('/user-order/show/{id}',[OrderController::class,'show'])->name('orders.show');
+
 });
 >>>>>>> 58bd366 (add order)

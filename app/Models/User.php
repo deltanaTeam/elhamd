@@ -62,6 +62,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Cart::class);
     }
+    public function getNameAttribute()
+    {
+        return implode(' ', array_filter([
+            $this->first_name,
+            $this->last_name
+
+        ]));
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

@@ -21,12 +21,17 @@ class Order extends Model
 
     public function items()
     {
-      $this->hasMany(OrderItem::class);
+     return   $this->hasMany(OrderItem::class);
     }
     public function shipping()
     {
         return $this->hasOne(Shipping::class);
     }
+
+    // public function getDiscountAttribute()
+    // {
+    //
+    // }
 
 
 
