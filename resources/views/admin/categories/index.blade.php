@@ -1,13 +1,13 @@
 @extends('admin.layouts.master')
 
-@section('title', "jhjhkjh")
+@section('title', __('lang.categories'))
 
 @section('sub-topbar')
 <div class=" " >
   <ul class="nav d-flex justify-content-start ">
     <li class="nav-item mx-3 pt-2 ">
        <b  class="text-primary  font-weight-bolder  h3 align-items-center ">
-         title
+         {{__('lang.categories')}}
        </b>
     </li>
   </ul>
@@ -33,7 +33,9 @@
                            ['title' => __('lang.order number')],
                            ['title' => __('lang.name_en')],
                            ['title' => __('lang.name_ar')],
-                           ['title' => __('lang.reason')],
+                           ['title' => __('lang.reason_en')],
+                           ['title' => __('lang.reason_ar')],
+
                            ['title' => __('lang.status')],
                            ['title' => __('lang.show_home')],
                            ['title' => __('lang.active')],
@@ -60,7 +62,9 @@
            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
            ['data' => 'name_en', 'name' => 'name_en'],
            ['data' => 'name_ar', 'name' => 'name_ar'],
-           ['data' => 'reason', 'name' => 'reason'],
+           ['data' => 'reason_en', 'name' => 'reason_en'],
+           ['data' => 'reason_ar', 'name' => 'reason_ar'],
+
            ['data' => 'status', 'name' => 'status'],
            ['data' => 'show_home', 'name' => 'show_home'],
 

@@ -21,8 +21,6 @@ return new class extends Migration
             $table->unsignedInteger('usage_limit')->nullable();;
             $table->unsignedInteger('usage_times')->nullable();
             $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('offer_id')->nullable()->constrained()->onDelete('set null');
             $table->boolean('is_active')->default(1);
 
             $table->timestamps();

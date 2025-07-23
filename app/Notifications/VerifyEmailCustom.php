@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class VerifyEmailCustom extends Notification implements ShouldQueue
+class VerifyEmailCustom extends Notification
 {
     use Queueable;
     protected string $url;
@@ -42,6 +42,14 @@ class VerifyEmailCustom extends Notification implements ShouldQueue
         ->action('Verify Email', $this->url)
         ->line('If you did not create an account, no further action is required.')
         ->salutation('Regards, ' . config('app.name'));
+       //  return (new MailMessage)
+       // // ->subject('🔐 بيانات تفعيل البريد الإلكتروني')
+       // // ->greeting('مرحبًا ' . $notifiable->name)
+       // // ->line('لإتمام تفعيل بريدك الإلكتروني، استخدمي البيانات التالية:')
+       // // ->line('ID: ' . $notifiable->getKey())
+       // // ->line('HASH: ' . sha1($notifiable->getEmailForVerification()))
+       // // ->line('يمكنك استخدامها مع واجهة الموقع أو Postman لتفعيل بريدك.')
+       // // ->salutation('تحياتنا، ' . config('app.name'));
 
     }
 

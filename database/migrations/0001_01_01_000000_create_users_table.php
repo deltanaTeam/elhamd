@@ -19,6 +19,7 @@ return new class extends Migration
           $table->string('password');
           $table->tinyInteger('age')->unsigned()->nullable();
           $table->enum('gender',['male','female']);
+          $table->enum('language',['ar','en'])->default('ar');
 
           $table->softDeletes();
           $table->string('governorate')->nullable();

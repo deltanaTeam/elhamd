@@ -10,14 +10,34 @@ class cater extends Seeder
 {
     public function run(): void
     {
-        DB::table('categories')->insert([
-            ['name' => 'إلكترونيات',  'reason' => 'كل ما يخص الإلكترونيات', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'ملابس', 'reason' => 'أحدث صيحات الملابس', 'created_at' => now(), 'updated_at' => now()],
-        ]);
+      DB::table('categories')->insert([
+  [
+      'name'   => json_encode(['ar' => 'اي كلام', 'en' => 'jhjdhdje']),
+      'reason' => json_encode(['ar' => 'كل ما يخص الإلكترونيات', 'en' => 'ekldnehb']),
+      'created_at' => now(),
+      'updated_at' => now(),
+  ],
+  [
+      'name'   => json_encode(['ar' => 'اي كلامjkj', 'en' => 'jkjplg']),
+      'reason' => json_encode(['ar' => 'أحدث صيحات الملابس', 'en' => 'hjbehnbdnj']),
+      'created_at' => now(),
+      'updated_at' => now(),
+  ]
+]);
 
-        DB::table('brands')->insert([
-            ['name' => 'hp',  'reason' => 'كل ما يخص الإلكترونيات', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'gucci', 'reason' => 'أحدث صيحات الملابس', 'created_at' => now(), 'updated_at' => now()],
-        ]);
+DB::table('brands')->insert([
+[
+'name'   => json_encode(['ar' => 'اي كلام', 'en' => 'jhjdhdje']),
+'reason' => json_encode(['ar' => 'كل ما يخص الإلكترونيات', 'en' => 'ekldnehb']),
+'created_at' => now(),
+'updated_at' => now(),
+],
+[
+'name'   => json_encode(['ar' => 'اي كلامjkj', 'en' => 'jkjplg']),
+'reason' => json_encode(['ar' => 'أحدث صيحات الملابس', 'en' => 'hjbehnbdnj']),
+'created_at' => now(),
+'updated_at' => now(),
+]
+]);
     }
 }

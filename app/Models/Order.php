@@ -8,25 +8,27 @@ class Order extends Model
 {
     protected $table = 'orders';
 
+    protected $guarded = ['id'];
+
+    public function master_order()
+    {
+        return $this->belongsTo(MasterOrder::class);
+    }
+    public function pharmacy()
+    {
+        return $this->belongsTo(Pharmacy::class);
+    }
+
     public function items()
     {
       $this->hasMany(OrderItem::class);
     }
-    // public function getDistributedDiscounts()
-    // {
-    //   $discounts = [];
-    //   $totalBeforDiscount = $this->items->sum(function($item){
-    //     return $this->price * $item->quantity;
-    //   });
-    //   if ($this->discount && $totalBeforDiscount >0) {
-    //     foreach ($this->items as  $item) {
-    //       $itemTotal = $item->price * $item->quantity;
-    //       $itemShare = $itemTotal /$totalBeforDiscount;
-    //       $itemDiscountTotal =$this->discount * $itemShare;
-    //       $unitDiscount = $itemDiscountTotal /$item->quantity;
-    //       $discounts[$item->id] = round($unitDiscount,2);
-    //     }
-    //   }
-    //   return $discounts;
-    // }
+    public function shipping()
+    {
+        return $this->hasOne(Shipping::class);
+    }
+
+
+
+
 }

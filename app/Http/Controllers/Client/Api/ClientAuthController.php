@@ -5,34 +5,50 @@ namespace App\Http\Controllers\Client\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Traits\MultiAuth;
-use App\Services\FirebaseAuthService;
+use App\Traits\SPA_Auth;
 
 class ClientAuthController extends Controller
 {
 
-    use MultiAuth;
-    public function __construct(FirebaseAuthService $firebaseAuth)
+    use SPA_Auth;
+    public function __construct()
     {
-        $this->setFirebaseAuth($firebaseAuth);
-        $this->guard = 'client';
-
-    }
-
-    public function clientRegister(Request $request)
-    {
-      return  $this->register($request, User::class ,$this->guard);
-    }
-
-    public function clientLogin(Request $request)
-    {
-       return $this->login($request, User::class ,$this->guard);
+        $this->useGuard('client', User::class);
     }
 
 
-    public function clientLogout(Request $request)
+    public function register(Request $request)
     {
-
-        return $this->logout($request ,$this->guard);
+      return  $this->publicRegister($request);
     }
+
+    public function login(Request $request)
+     {
+         return $this->publicLogin($request);
+     }
+
+     public function forgotPassword(Request $request)
+     {
+         return $this->publicForgotPassword($request,"client");
+     }
+
+     public function resetPassword(Request $request)
+     {
+         return $this->publicResetPassword($request,"client");
+     }
+
+     public function invokeEmail(Request $request, $id, $hash)
+     {
+         return $this->publicInvokeEmail($request, $id, $hash);
+     }
+
+     public function resentEmail(Request $request)
+     {
+         return $this->publicResentEmail($request);
+     }
+
+     public function logout(Request $request)
+     {
+         return $this->publicLogout($request);
+     }
 }

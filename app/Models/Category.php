@@ -13,7 +13,7 @@ class Category extends Model
    protected $with = [
        'media',
     ];
-    public $translatable = ['name'];
+    public $translatable = ['name','reason'];
 
     protected $casts = [
         'active' => 'boolean',

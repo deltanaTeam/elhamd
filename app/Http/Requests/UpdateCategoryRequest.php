@@ -22,13 +22,13 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-      $id = $this->route('category')?? $this->route('id');
+      $category = $this->route('category')?? $this->route('id');
+
       return [
-        'name_en' => ['required', 'string', 'max:100',Rule::unique('categories','name->en')->ignore($id)],
-        'name_ar' => ['required', 'string', 'max:100',Rule::unique('categories','name->ar')->ignore($id)],
+        // 'name_en' => ['required', 'string', 'max:90',Rule::unique('categories','name->en')->ignore($category->id)],
+        // 'name_ar' => ['required', 'string', 'max:90',Rule::unique('categories','name->ar')->ignore($category->id)],
         'description_en' => ['nullable', 'string', 'max:255'],
         'description_ar' => ['nullable', 'string', 'max:255'],
-        'image' => ['nullable','image','mimes:jpeg,png,jpg,webp', 'max:3072'],
 
       ];
     }

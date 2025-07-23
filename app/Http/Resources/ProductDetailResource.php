@@ -46,21 +46,21 @@ class ProductDetailResource extends JsonResource
           'image' => new MediaResource($this->getFirstMedia()),
           'gallery' => $this->getMediaResource('gallery') ?: null,
           'offer'         => $this->offer ? new OfferResource($this) : null,
-             'imageUrl'      => $this->getFirstMediaUrl(),
+         'imageUrl'      => $this->getFirstMediaUrl(),
 
-             'user_rating_avg'       => round($this->ratings->avg('rate'), 2),
-             'pharmacist_rating_avg' => round($this->pharmacistRatings->avg('rate'), 2),
+         'user_rating_avg'       => round($this->ratings->avg('rate'), 2),
+         'pharmacist_rating_avg' => round($this->pharmacistRatings->avg('rate'), 2),
 
-             'user_comments' => UserProductRatingResource::collection($this->ratings),
-             'pharmacist_comments' => PharmacistProductRatingResource::collection($this->pharmacistRatings),
+         'user_comments' => UserProductRatingResource::collection($this->ratings),
+         'pharmacist_comments' => PharmacistProductRatingResource::collection($this->pharmacistRatings),
 
-             'similar_products' => ProductResource::collection(
-                 Product::where('id', '!=', $this->id)
-                     ->where('category_id', $this->category_id)
-                     ->where('active', true)
-                     ->take(6)
-                     ->get()
-             )
+         'similar_products' => ProductResource::collection(
+             Product::where('id', '!=', $this->id)
+                 ->where('category_id', $this->category_id)
+                 ->where('active', true)
+                 ->take(6)
+                 ->get()
+         )
 
       ];
     }

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\{
-    Brand, Category, Product, Offer, User, UserProductRating, Order, OrderItem
+    Brand, Category, Product, Offer, User, UserProductRating, Order, OrderItem,MasterOrder
 };
 use Illuminate\Support\Facades\Hash;
 
@@ -99,9 +99,16 @@ class HomeTestSeeder extends Seeder
         }
 
         // ====== Orders & OrderItems ======
+        $master_order = MasterOrder::create([
+          'user_id' => 1,
+            'total' => 0,
+            'status' => 'delivered',
+        ]);
+          $total = 0;
         foreach (range(1, 20) as $i) {
+
             $order = Order::create([
-                'user_id' => 1,
+                   'master_order_id' => $master_order->id,
                 'pharmacy_id' => 1,
                 'status' => 'delivered',
                 'subtotal' => 0,
@@ -158,6 +165,9 @@ class HomeTestSeeder extends Seeder
                 'total'          => $subtotal - $orderDiscount,
                 'paid_amount'    => $subtotal - $orderDiscount,
             ]);
+            $total += $order->total ;
+
         }
+        $master_order->total = $total;
     }
 }

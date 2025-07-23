@@ -15,22 +15,22 @@ class PharmacistAuthController extends Controller
   }
   public function showLoginForm()
   {
-      return view('auth.login');
+      return view('pharmacist.login');
   }
 
   public function showRegisterForm()
   {
-      return view('auth.register');
+      return view('pharmacist.register');
   }
 
   public function showForgotPasswordForm()
   {
-      return view('auth.forgot-password');
+      return view('pharmacist.forgot-password');
   }
 
   public function showResetPasswordForm(Request $request, $token)
   {
-      return view('auth.reset-password', [
+      return view('pharmacist.reset-password', [
           'token' => $token,
           'email' => $request->email,
       ]);

@@ -8,7 +8,7 @@ use App\Helpers\JsonResponse;
 use App\Models\Cart;
 use Exception;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\Client\CartResource;
+use App\Http\Resources\CartItemResource;
 use App\Interfaces\Client\CartRepositoryInterface;
 use App\Repositories\Client\CartRepository;
 use App\Http\Controllers\BaseController;
@@ -23,7 +23,7 @@ class CartController extends BaseController
     public function index()
     {
         $cart = Cart::firstOrCreate([
-                    'user_id' => auth('client')->id();
+                    'user_id' => auth('client')->id()
                 ]);
         try {
            $cart->load('items.product.offer');
@@ -31,18 +31,21 @@ class CartController extends BaseController
            $items = CartItemResource::collection($cart->items);
 
             if (!$cart || $cart->items->isEmpty()) {
-                return JsonResponse::respondError('Cart is empty');
+                return JsonResponse::respondError(__('lang.Cart is empty'));
             }
+
             $summary = [
-                'subtotal' => $cart->items->sum('final_price'),
-                'tax'      => $cart->items->sum('tax_amount'),
-                'total'    => $cart->items->sum('total')
+                'subtotal' =>  round( $cart->items->sum('final_price'),2),
+                'tax'      => round( $cart->items->sum('tax_amount'),2),
+                'total'    => round( ($cart->items->sum('total') ),2),
+                'count_items' => count($items)
+
             ];
             $data =[
-                'cart'    => $items,
+                'items'    => $items,
                 'summary' => $summary
             ];
-            return JsonResponse::respondSuccess("cart get successfully",$data);
+            return JsonResponse::respondSuccess(__('lang.cart get successfully'),$data);
 
         } catch (Exception $e) {
             return JsonResponse::respondError($e->getMessage());
@@ -99,7 +102,7 @@ class CartController extends BaseController
      */
      public function update(Request $request, string $id)
      {
-         $user = auth()->user();
+         $user = auth('client')->user();
 
          $validator = Validator::make($request->all(), [
              'quantity' => 'required|integer|min:1',
@@ -113,20 +116,20 @@ class CartController extends BaseController
              $cart = $user->cart()->with('items')->first();
 
              if (!$cart) {
-                 return JsonResponse::respondError("Cart Doesn't Exist.");
+                 return JsonResponse::respondError(__("lang.Cart Doesn't Exist."));
              }
 
              $item = $cart->items()->where('id', $id)->first();
 
              if (!$item) {
-                 return JsonResponse::respondError("Item Doesn't in Cart");
+                 return JsonResponse::respondError(__("lang.Item Doesn't in Cart"));
              }
 
              $item->update([
                  'quantity' => $request->quantity,
              ]);
 
-             return JsonResponse::respondSuccess('Quantity Updated Successfully');
+             return JsonResponse::respondSuccess(__('lang.Quantity Updated Successfully'));
 
          } catch (Exception $e) {
              return JsonResponse::respondError($e->getMessage());
@@ -139,28 +142,37 @@ class CartController extends BaseController
      */
      public function destroy(string $id)
      {
-         $user = auth()->user();
+         $user = auth('client')->user();
 
          try {
              $cart = $user->cart()->with('items')->first();
 
              if (!$cart) {
-               return JsonResponse::respondError("Cart Doesn't Exist .");
+               return JsonResponse::respondError(__("lang.Cart Doesn't Exist."));
              }
 
              $item = $cart->items()->where('id', $id)->first();
 
              if (!$item) {
-               return JsonResponse::respondError("Item Doesn't in Cart");
+               return JsonResponse::respondError(__("lang.Item Doesn't in Cart"));
              }
 
              $item->delete();
 
-             return JsonResponse::respondSuccess('Item Deleted Successfully');
+             return JsonResponse::respondSuccess(__('lang.Item Deleted Successfully'));
 
          } catch (Exception $e) {
              return JsonResponse::respondError($e->getMessage());
          }
      }
+
+     /**
+        * apply  a customer coupon in cart .
+        */
+
+     //////////////////////////////////////////////////////////////////////
+
+
+
 
 }

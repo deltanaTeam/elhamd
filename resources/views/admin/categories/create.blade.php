@@ -47,14 +47,12 @@
                 </div>
 
                 <div class="mb-3 col-md-6 form-group2">
-                    <label class="Banzima-check-container">
-
-                       {{ __('lang.active')}}
-
-                      <input type="checkbox" name="active" value="is_active"  id="is_active">
-                      <span class="banzima-check-checkmark"></span>
-                    </label>
-                 </div>
+                    <label for="is_active" class="form-label">{{__('lang.activate Category')}}</label>
+                    <select name="is_active" class="form-control">
+                        <option value="1" >{{__('lang.active')}}</option>
+                        <option value="0" >{{__('lang.inactive')}}</option>
+                    </select>
+                </div>
 
                  <div class="mb-3 col-md-6 form-group2">
                      <label class="Banzima-check-container">

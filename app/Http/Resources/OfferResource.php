@@ -30,6 +30,7 @@ class OfferResource extends JsonResource
         }
         return [
             'product_id'    => $product->id,
+            'offer_title'  => $offer ?->title  ,
             'price_before'  => round($product->price, 2),
             'price_after'   => round($result['final_price'], 2),
 

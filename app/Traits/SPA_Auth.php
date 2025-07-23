@@ -11,18 +11,19 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\{Rules,Rule};
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Helpers\JsonResponse;
 use App\Notifications\VerifyEmailCustom;
-
+use App\Notifications\ResetPasswordTokenNotification;
+use App\Models\User;
 trait SPA_Auth
 {
     protected string $guard = 'web';
-    protected string $modelClass = "Model";
+    protected  $modelClass = User::class;
 
-    public function useGuard(string $guard, string $modelClass): static
+    public function useGuard(string $guard, $modelClass): static
     {
         $this->guard = $guard;
         $this->modelClass = $modelClass;
@@ -32,15 +33,25 @@ trait SPA_Auth
     public function publicRegister(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:' . (new $this->modelClass)->getTable(),
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+          'first_name'     => 'required|string|max:255',
+          'last_name'     => 'required|string|max:255',
+          'governorate'     => 'required|string|max:255',
+          'gender'     => 'required|in:male,female',
+          'age'     => 'required|integer|min:0|max:130',
+          'phone' => ['required','regex:/^\+\d{1,3}\d{4,14}$/', Rule::unique((new $this->modelClass)->getTable())],
+          'email'    => 'required|email|unique:' . (new $this->modelClass)->getTable(),
+          'password' => ['required', 'confirmed', Rules\Password::defaults()],
+       ]);
 
         $user = $this->modelClass::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+          'first_name'     => $request->first_name,
+          'last_name'     => $request->last_name,
+          'governorate'     => $request->governorate,
+          'gender'     => $request->gender,
+          'age'     => $request->age,
+          'phone'     => $request->phone,
+          'email'    => $request->email,
+          'password' => Hash::make($request->password)
         ]);
 
         if ($user instanceof MustVerifyEmail) {
@@ -57,19 +68,24 @@ trait SPA_Auth
 
     public function publicLogin(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (!Auth::guard($this->guard)->attempt($credentials)) {
+        $user = $this->modelClass::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'email' => ['Invalid credentials.']
             ]);
         }
 
-        $user = Auth::guard($this->guard)->user();
-
         if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
             return JsonResponse::respondError('Email not verified.', 403);
         }
+
+        $user->tokens()->delete();
 
         $token = $user->createToken($this->guard . '_token')->plainTextToken;
 
@@ -83,12 +99,19 @@ trait SPA_Auth
     {
         $request->validate(['email' => 'required|email']);
 
-        $status = Password::broker($broker)->sendResetLink(
-            $request->only('email')
-        );
+        $user = $this->modelClass::where('email', $request->email)->first();
 
-        return JsonResponse::respondSuccess(__($status));
+        if (!$user) {
+            return JsonResponse::respondError("No user found with this email", 404);
+        }
+
+        $token = Password::broker($broker)->createToken($user);
+
+        $user->notify(new ResetPasswordTokenNotification($token, $user->email));
+
+        return JsonResponse::respondSuccess('Password reset token sent to your email.');
     }
+
 
     public function publicResetPassword(Request $request, $broker = null)
     {
@@ -115,7 +138,12 @@ trait SPA_Auth
 
     public function publicInvokeEmail(Request $request, $id, $hash)
     {
-        $user = $this->getValidUser($id, $hash);
+        $user = $this->modelClass::findOrFail($id);
+
+        if (! hash_equals($hash, sha1($user->getEmailForVerification()))) {
+            abort(403, 'Invalid verification link.');
+        }
+        // $user = $this->getValidUser($id, $hash);
 
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();

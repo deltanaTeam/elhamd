@@ -8,24 +8,18 @@ use App\Helpers\JsonResponse;
 class Coupon extends BaseModel
 {
   protected $guarded = ['id'];
-  public function offer()
-  {
-      return $this->belongsTo(Offer::class);
-  }
+
 
   public function pharmacy()
   {
       return $this->belongsTo(Pharmacy::class);
   }
 
-  public function user()
-  {
-      return $this->belongsTo(User::class);
-  }
+
 
   // app/Models/Coupon.php
 
-public function isValidFor($userId = null): array
+public function isValid(): array
 {
     $now = now();
 

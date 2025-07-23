@@ -142,9 +142,73 @@
                     </div>
                 </li>
 
+                <li class="menu-item menu-item-submenu {{request()->routeIs('admin.coupons.*') ?'menu-item-active':''}}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="javascript:;" class="menu-link menu-toggle">
+                      <span class="svg-icon svg-icon-primary svg-icon-2x">
+                      @include('admin.layouts.icons.price')
+                      </span>
+                      <span class="menu-text mx-2">{{__('lang.coupons')}}</span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu">
+                        <i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
 
 
-                
+                            <li class="menu-item " aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{route('admin.coupons.create')}}" class="menu-link  ">
+                                    <i class="menu-bullet menu-bullet-line">
+                                    </i>
+                                    <span class="menu-text">{{__('lang.create')}} </span>
+                                </a>
+                            </li>
+
+                            <li class="menu-item " aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{route('admin.coupons.index')}}" class="menu-link  ">
+                                    <i class="menu-bullet menu-bullet-line">
+                                    </i>
+                                    <span class="menu-text">{{__('lang.show all')}} </span>
+                                </a>
+                            </li>
+
+
+
+
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-item menu-item-submenu {{request()->routeIs('admin.point-settings.*') ?'menu-item-active':''}}" aria-haspopup="true" data-menu-toggle="hover">
+                    <a href="javascript:;" class="menu-link menu-toggle">
+                      <span class="svg-icon svg-icon-primary svg-icon-2x">
+                      @include('admin.layouts.icons.price')
+                      </span>
+                      <span class="menu-text mx-2">{{__('lang.point_settings')}}</span>
+                      <i class="menu-arrow"></i>
+                    </a>
+                    <div class="menu-submenu">
+                        <i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+
+
+              
+
+                            <li class="menu-item " aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{route('admin.point-settings.index')}}" class="menu-link  ">
+                                    <i class="menu-bullet menu-bullet-line">
+                                    </i>
+                                    <span class="menu-text">{{__('lang.show all')}} </span>
+                                </a>
+                            </li>
+
+
+
+
+
+                        </ul>
+                    </div>
+                </li>
 
 
 

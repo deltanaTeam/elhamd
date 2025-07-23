@@ -113,7 +113,7 @@ trait WebAuth
         );
 
         return $status == Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
+            ? redirect()->route($this->guard.'.login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);
     }
 
@@ -126,7 +126,7 @@ trait WebAuth
             event(new Verified($user));
         }
 
-        return redirect()->route('login')->with('status',  __('lang.email_comfirm_successfull'));
+        return redirect()->route($this->guard.'.login')->with('status',  __('lang.email_comfirm_successfull'));
     }
 
     public function publicResentEmail(Request $request)
@@ -145,7 +145,7 @@ trait WebAuth
     protected function sendVerificationNotification(MustVerifyEmail $user): void
     {
         $verificationUrl = URL::temporarySignedRoute(
-            'verification.verify',
+            $this->guard .'.verification.verify',
             now()->addMinutes(60),
             [
                 'id' => $user->getKey(),

@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
             $table->decimal('value',10,2)->default(50);
+            $table->enum('type',['fast','standard'])->default('standard');
+            $table->foreignId('pharmacy_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
+
+            $table->timestamps();
+
         });
     }
 
