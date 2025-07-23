@@ -94,6 +94,9 @@ class OrderService
                          'total'         => $lineTotal,
                          'offer_id'  =>$hasOffer?->id
                      ];
+                     $product = $item->product;
+                     $product->quantity -= $item->quantity;
+                     $product->save();
                  }
                  $pointSetting = PointSetting::where('pharmacy_id', $pharmacyId)
                                    ->where('is_active', true)->first();

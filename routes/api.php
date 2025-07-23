@@ -1,22 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-use App\Http\Controllers\Client\Api\HomeController  ;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\API\ProductRatingController;
-      
-
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Pharmacy\Api\PharmacyProductController;
-=======
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
-<<<<<<< HEAD
-use App\Http\Controllers\Client\Api\{HomeController,CartController ,ClientAuthController}  ;
->>>>>>> 58bd366 (add order)
-=======
+
 use App\Http\Controllers\Client\Api\{HomeController,CartController ,OrderController,ClientAuthController}  ;
->>>>>>> 8ed2815 (show order)
 
 RateLimiter::for('medications_limiter', function ($request) {
        return Limit::perMinute(1)->by(optional($request->user())->id ?: $request->ip());
@@ -26,9 +16,10 @@ Route::get('/pharmacy/{id}',[HomeController::class,'getPharmacy'])->name('pharma
 Route::get('/filter-products',[HomeController::class,'filterProducts'])->name('filter.proucts');
 Route::get('/search',[HomeController::class,'searchProducts'])->name('search');
 Route::get('/products/show/{id}',[HomeController::class,'showProduct'])->name('products.show');
+Route::get('/categories/show/{id}',[HomeController::class,'showCategory'])->name('categories.show');
+Route::get('/brands/show/{id}',[HomeController::class,'showBrand'])->name('brands.show');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 Route::middleware('auth:sanctum')->prefix('product')->group(function () {
     // عرض جميع المنتجات
@@ -63,11 +54,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('products/{product}/ratings', [ProductRatingController::class, 'store']);
     Route::get('products/{product}/ratings', [ProductRatingController::class, 'index']);
 });
-=======
-Route::middleware(['guest:client', 'throttle:medications_limiter'])->group(function () {
-=======
+
 Route::middleware(['guest:client'])->group(function () {
->>>>>>> 8ed2815 (show order)
 
       Route::post('/register', [ClientAuthController::class, 'register']);
       Route::post('/login', [ClientAuthController::class, 'login']);
@@ -91,4 +79,3 @@ Route::middleware(['auth:client', 'verified.api'])->group(function () {
   Route::get('/user-order/show/{id}',[OrderController::class,'show'])->name('orders.show');
 
 });
->>>>>>> 58bd366 (add order)

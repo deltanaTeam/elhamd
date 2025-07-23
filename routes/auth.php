@@ -1,59 +1,42 @@
-<<<<<<< HEAD
 <?php
 
-// use App\Http\Controllers\Auth\AuthenticatedSessionController;
-// use App\Http\Controllers\Auth\ConfirmablePasswordController;
-// use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-// use App\Http\Controllers\Auth\EmailVerificationPromptController;
-// use App\Http\Controllers\Auth\NewPasswordController;
-// use App\Http\Controllers\Auth\PasswordController;
-// use App\Http\Controllers\Auth\PasswordResetLinkController;
-// use App\Http\Controllers\Auth\RegisteredUserController;
-// use App\Http\Controllers\Auth\VerifyEmailController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Pharmacy\Web\PharmacistAuthController  ;
-
-<<<<<<< HEAD
-
-=======
-Route::group(['prefix' => LaravelLocalization::setLocale()], function()
-{
->>>>>>> 58bd366 (add order)
-Route::middleware('guest')->group(function () {
-
-
-    Route::get('pharmacist/register', [PharmacistAuthController::class, 'showRegisterForm'])
-        ->name('pharmacist.register');
-
-    // Route::post('register', [PharmacistAuthController::class, 'register']);
-
-    Route::get('pharmacist/login', [PharmacistAuthController::class, 'showLoginForm'])
-        ->name('pharmacist.login');
-
-    Route::post('pharmacist/login', [PharmacistAuthController::class, 'login']);
-
-    Route::get('pharmacist/forgot-password', [PharmacistAuthController::class, 'showForgotPasswordForm'])
-        ->name('pharmacist.password.request');
-
-    Route::post('pharmacist/forgot-password', [PharmacistAuthController::class, 'forgotPassword'])
-        ->name('pharmacist.password.email');
-
-    Route::get('pharmacist/reset-password/{token}', [PharmacistAuthController::class, 'showResetPasswordForm'])
-        ->name('pharmacist.password.reset');
-
-    Route::post('pharmacist/reset-password', [PharmacistAuthController::class, 'resetPassword'])
-        ->name('pharmacist.password.store');
-
-});
-
-Route::middleware('auth:pharmacist')->group(function () {
-  Route::get('pharmacist/verify-email/{id}/{hash}',[PharmacistAuthController::class, 'invokeEmail'])->middleware(['signed'])->name('pharmacist.verification.verify');
-  Route::post('/email-resend', [PharmacistAuthController::class, 'resentEmail'])->middleware('auth:client');
-
-});
-
-});
-
-
-=======
->>>>>>> 8ed2815 (show order)
+// use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\Pharmacy\Web\PharmacistAuthController  ;
+//
+//
+// Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+// {
+// Route::middleware('guest:pharmacist')->group(function () {
+//
+//
+//     Route::get('pharmacist/register', [PharmacistAuthController::class, 'showRegisterForm'])
+//         ->name('pharmacist.register');
+//
+//     Route::post('pharmacist/register', [PharmacistAuthController::class, 'register'])->name('pharmacist.register');
+//
+//     Route::get('pharmacist/login', [PharmacistAuthController::class, 'showLoginForm'])
+//         ->name('pharmacist.login');
+//
+//     Route::post('pharmacist/login', [PharmacistAuthController::class, 'login'])->name('pharmacist.login');
+//
+//     Route::get('pharmacist/forgot-password', [PharmacistAuthController::class, 'showForgotPasswordForm'])
+//         ->name('pharmacist.password.request');
+//
+//     Route::post('pharmacist/forgot-password', [PharmacistAuthController::class, 'forgotPassword'])
+//         ->name('pharmacist.password.email');
+//
+//     Route::get('pharmacist/reset-password/{token}', [PharmacistAuthController::class, 'showResetPasswordForm'])
+//         ->name('pharmacist.password.reset');
+//
+//     Route::post('pharmacist/reset-password', [PharmacistAuthController::class, 'resetPassword'])
+//         ->name('pharmacist.password.store');
+//
+// });
+//
+// Route::middleware('auth:pharmacist')->group(function () {
+//   Route::get('pharmacist/verify-email/{id}/{hash}',[PharmacistAuthController::class, 'invokeEmail'])->middleware(['signed'])->name('pharmacist.verification.verify');
+//   Route::post('/email-resend', [PharmacistAuthController::class, 'resentEmail']);
+// 
+// });
+//
+// });

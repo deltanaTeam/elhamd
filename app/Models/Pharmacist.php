@@ -21,7 +21,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-class Pharmacist extends Authenticatable implements MustVerifyEmail
+class Pharmacist extends Authenticatable 
 {
 
       /** @use HasFactory<\Database\Factories\UserFactory> */

@@ -20,12 +20,12 @@ Route::middleware('guest')->group(function () {
     Route::get('pharmacist/register', [PharmacistAuthController::class, 'showRegisterForm'])
         ->name('pharmacist.register');
 
-    // Route::post('register', [PharmacistAuthController::class, 'register']);
+    Route::post('pharmacist/register', [PharmacistAuthController::class, 'register'])->name('pharmacist.register');
 
     Route::get('pharmacist/login', [PharmacistAuthController::class, 'showLoginForm'])
         ->name('pharmacist.login');
 
-    Route::post('pharmacist/login', [PharmacistAuthController::class, 'login']);
+    Route::post('pharmacist/login', [PharmacistAuthController::class, 'login'])->name('pharmacist.login');
 
     Route::get('pharmacist/forgot-password', [PharmacistAuthController::class, 'showForgotPasswordForm'])
         ->name('pharmacist.password.request');

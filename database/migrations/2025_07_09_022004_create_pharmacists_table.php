@@ -24,6 +24,7 @@ return new class extends Migration
           $table->timestamp('last_login_at')->nullable();
           $table->text('address')->nullable();
           $table->string('phone')->nullable();
+          $table->boolean('is_active')->default(false);
 
           $table->boolean('is_verified')->default(true);
           $table->rememberToken();

@@ -49,7 +49,7 @@ class PharmacistAuthController extends Controller
 
   public function register(Request $request)
   {
-      return $this->publicRegister($request);
+      return $this->publicRegister($request ,0);
   }
 
   public function login(Request $request)

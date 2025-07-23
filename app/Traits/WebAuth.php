@@ -32,7 +32,7 @@ trait WebAuth
 
 
    ////////////////////////////////////////////////////////////////////////
-    public function publicRegister(Request $request)
+    public function publicRegister(Request $request ,$pharmacyId=null)
     {
         $request->validate([
             'name'     => 'required|string|max:255',
@@ -40,19 +40,23 @@ trait WebAuth
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = $this->modelClass::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+
+       $data = [
+           'name'     => $request->name,
+           'email'    => $request->email,
+           'password' => Hash::make($request->password),
+       ];
+       if ($pharmacyId ==0) {
+         $data['pharmacy_id'] = $pharmacyId;
+       }
+        $user = $this->modelClass::create($data);
 
         if ($user instanceof MustVerifyEmail) {
             $this->sendVerificationNotification($user);
         }
 
-        Auth::guard($this->guard)->login($user);
 
-        return redirect('admin/dashboard')->with('success', __('lang.register_successfully'));
+        return redirect($this->guard.'/login')->with('success', __('lang.register_successfully'));
     }
 
     public function publicLogin(Request $request)
@@ -68,10 +72,6 @@ trait WebAuth
 
         $user = Auth::guard($this->guard)->user();
 
-        if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
-            Auth::guard($this->guard)->logout();
-            return redirect()->back()->withErrors(['email' =>  __('lang.MSG_EMAIL_NOT_VERIFIED')]);
-        }
 
         return redirect()->intended('admin/dashboard');
     }
