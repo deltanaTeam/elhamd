@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController ;
 use App\Http\Controllers\Dashboard\CategoryController as AdminCategoryController ;
 use App\Http\Controllers\Dashboard\{CouponController,PointSettingController } ;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()

@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('generic_name')->nullable();
+            $table->string('image')->nullable();
             $table->string('type');// دواء او مكمل
             $table->string('form');  // اقراص - شراب
             $table->string('strength');// التركيز

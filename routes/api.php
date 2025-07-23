@@ -1,11 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\API\ProductRatingController;
+      
+use App\Http\Controllers\Client\Api\MedicationController;
+
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Pharmacy\Api\PharmacyProductController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
-
 use App\Http\Controllers\Client\Api\{HomeController,CartController ,OrderController,ClientAuthController}  ;
 
 RateLimiter::for('medications_limiter', function ($request) {
@@ -54,7 +57,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('products/{product}/ratings', [ProductRatingController::class, 'store']);
     Route::get('products/{product}/ratings', [ProductRatingController::class, 'index']);
 });
-
 Route::middleware(['guest:client'])->group(function () {
 
       Route::post('/register', [ClientAuthController::class, 'register']);
@@ -78,4 +80,13 @@ Route::middleware(['auth:client', 'verified.api'])->group(function () {
   Route::get('/user-orders',[OrderController::class,'index'])->name('orders.index');
   Route::get('/user-order/show/{id}',[OrderController::class,'show'])->name('orders.show');
 
+});
+
+
+   Route::middleware(['auth:client',])->group(function () {
+    Route::post('/medications', [MedicationController::class, 'store']);
+    Route::get('/medications/today', [MedicationController::class, 'today']);
+    Route::post('/medications/{id}/expire-decision', [MedicationController::class, 'handleExpiration']);
+    Route::delete('/medications/{id}', [MedicationController::class, 'destroy']);
+    Route::get('/medications/search', [MedicationController::class, 'search']);
 });

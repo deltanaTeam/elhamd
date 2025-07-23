@@ -9,6 +9,8 @@
 // use App\Http\Controllers\Auth\PasswordResetLinkController;
 // use App\Http\Controllers\Auth\RegisteredUserController;
 // use App\Http\Controllers\Auth\VerifyEmailController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pharmacy\Web\PharmacistAuthController  ;
 
@@ -22,6 +24,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('pharmacist/register', [PharmacistAuthController::class, 'register'])->name('pharmacist.register');
 
+    
     Route::get('pharmacist/login', [PharmacistAuthController::class, 'showLoginForm'])
         ->name('pharmacist.login');
 
