@@ -30,7 +30,7 @@
                .login-box {
                    background-color: #2c2c3e;
                    padding: 30px;
-                   border-radius: 15px;
+                   border-radius: 0px 0px 15px 15px;
                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
                    width: 100%;
                    width: 500px;
@@ -65,12 +65,55 @@
                }
            </style>
     </head>
+
     <body class="bg-dark">
         <div class="">
 
             <div class="  bg-dark  text-white ">
+
+              <div class="dropdown  rounded-top row" style="height:90%;background-color: #3f3f5a; ">
+                  <!--begin::Toggle-->
+                  <div class="topbar-item  col-6  white"  >
+
+                    <div class=" btn btn-block  btn-lg   text-white" >
+                      @yield('guest-links')
+                    </div>
+                  </div>
+                  <div class="topbar-item col-6  " data-toggle="dropdown" >
+                      <div class=" col-12 btn btn-block   btn-dropdown btn-lg  text-white">
+                          <i class="fa fa-flag"></i>{{app()->getLocale()}}
+                      </div>
+
+                  </div>
+
+
+                  <!--end::Toggle-->
+                  <!--begin::Dropdown-->
+                  <div
+                      class="dropdown-menu t p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-left">
+                      <!--begin::Nav-->
+                      <ul class="navi navi-hover py-4">
+
+                        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                         <li class="navi-item">
+                          <a rel="alternate" class="navi-link"  hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+
+                            <span class="navi-text">  {{ $properties['native'] }} </span>
+
+                          </a>
+                      </li>
+                        @endforeach
+                         <!--end::Item-->
+                      </ul>
+                      <!--end::Nav-->
+                  </div>
+                  <!--end::Dropdown-->
+              </div>
                 @yield('content')
             </div>
         </div>
+        <script src="{{asset('assets/plugins/global/plugins.bundled1cf.js?v=7.1.6')}}"></script>
+        <script src="{{asset('assets/plugins/custom/prismjs/prismjs.bundled1cf.js?v=7.1.6')}}"></script>
+        <script src="{{asset('assets/js/scripts.bundled1cf.js?v=7.1.6')}}"></script>
     </body>
 </html>

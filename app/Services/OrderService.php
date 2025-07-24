@@ -126,7 +126,7 @@ class OrderService
                  $total += $order->total;
                  $order->items()->createMany($itemsData);
 
-                 $this->addEarnedPointsToWallet( $order);
+                 $this->addEarnedPointsToWallet( $order,$user->id);
 
                  $orders[] = $order;
              }
@@ -267,35 +267,35 @@ class OrderService
       }
 
       ///////////////////////////////////////////////////////////////////////////////////////////
-      public function addEarnedPointsToWallet( $order)
+      public function addEarnedPointsToWallet( $order,$userID)
       {
           if (!$order->earned_points || $order->earned_points <= 0) {
               return;
           }
 
           try {
-              $wallet = Wallet::firstOrCreate(
-                  [
-                      'user_id' => $order->user_id,
-                      'pharmacy_id' => $order->pharmacy_id,
-                  ],
-                  [
-                      'balance' => 0,
-                      'point_balance' => 0,
-                  ]
-              );
+              $wallet = Wallet::where('pharmacy_id',$order->pharmacy_id)->where('user_id',$userID)->first();
+              if($wallet){
+                $wallet->point_balance += $order->earned_points;
+                $wallet->save();
+              }
+              else{
+                $wallet = new Wallet;
+                $wallet->user_id =  $userID;
+                $wallet->pharmacy_id =  $order->pharmacy_id;
+                $wallet->balance =  0;
+                $wallet->point_balance =  $order->earned_points;
+                $wallet->save();
+              }
 
-
-              $wallet->point_balance += $order->earned_points;
-              $wallet->save();
 
               WalletTransaction::create([
                   'wallet_id' => $wallet->id,
                   'type' => 'earn_points',
                   'points' => $order->earned_points,
-                  'amount' => null,
+                  'amount' => $order->earned_points,
                   'order_id' => $order->id,
-                  'description' => 'نقاط مكتسبة من الطلب رقم #' . $order->id,
+                  'description' => __('lang.earned point from order ') . $order->id,
               ]);
 
           } catch (\Exception $e) {

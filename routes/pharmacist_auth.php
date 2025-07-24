@@ -44,10 +44,10 @@ Route::middleware('guest')->group(function () {
 
 });
 
-Route::middleware('auth:pharmacist')->group(function () {
+ Route::middleware('auth:pharmacist')->group(function () {
   Route::get('/pharmacist/email/verify', function () {
     return view('pharmacist.auth.verify-email');
-})->middleware('auth:pharmacist')->name('verification.notice');
+})->middleware('auth:pharmacist')->name('pharmacist.verification.notice');
   Route::get('pharmacist/verify-email/{id}/{hash}',[PharmacistAuthController::class, 'invokeEmail'])->middleware(['signed'])->name('pharmacist.verification.verify');
   Route::post('pharmacist/email-resend', [PharmacistAuthController::class, 'resentEmail'])->name('pharmacist.verification.send');
   Route::post('pharmacist/logout', [PharmacistAuthController::class, 'logout'])->name('pharmacist.logout');

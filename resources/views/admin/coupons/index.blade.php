@@ -28,7 +28,7 @@
 
             @include('admin.session')
             @include('admin.partials.datatable', [
-                       'id' => 'category_table',
+                       'id' => 'coupon_table',
                        'columns' => [
                            ['title' => __('lang.order number')],
                            ['title' => __('lang.discount_type')],
@@ -40,7 +40,7 @@
                            ['title' => __('lang.usage_limit')],
                            ['title' => __('lang.usage_times')],
                            ['title' => __('lang.is_active')],
-                           ['title' => __('lang.pharmacy_id ')],
+                           ['title' => __('lang.pharmacyName ')],
 
                            ['title' => __('lang.actions')],
                        ],
@@ -57,8 +57,8 @@
 
 
 @include('admin.partials.datatable_script', [
-       'id' => 'category_table',
-       'ajax_url' => route('admin.categories.index'),
+       'id' => 'coupon_table',
+       'ajax_url' => route('admin.coupons.index'),
        'datatable_columns' => [
            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
            ['data' => 'discount_type', 'name' => 'discount_type'],
@@ -71,7 +71,7 @@
 
            ['data' => 'usage_times', 'name' => 'usage_times'],
            ['data' => 'is_active', 'name' => 'is_active'],
-           ['data' => 'pharmacy_id', 'name' => 'pharmacy_id'],
+           ['data' => 'pharmacyName', 'name' => 'pharmacyName'],
 
            ['data' => 'action', 'name' => 'action', 'orderable' => false],
        ]

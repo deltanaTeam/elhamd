@@ -1,4 +1,4 @@
-@extends('auth.guest') 
+@extends('auth.guest')
 @section('content')
 
 <div class="container py-4">

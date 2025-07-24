@@ -1,7 +1,10 @@
 @extends('auth.guest')
 @section('title',  __('lang.Log in'))
 @section('content')
+@section('guest-links')
+<a href="{{route('pharmacist.register')}}" class="text-white p-5">{{__('lang.register')}}</a>
 
+@endsection
     <div class="login-box">
       <div class="text-center mb-4">
         @include('session')

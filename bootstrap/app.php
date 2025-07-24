@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
        // $middleware->append(\App\Http\Middleware\SetLocaleFromHeader::class),
        $middleware->alias([
                'verified.api' => \App\Http\Middleware\EnsureEmailIsVerifiedApi::class,
+               'pharmacist.verified' => \App\Http\Middleware\EnsurePharmacistEmailIsVerified::class,
+
            ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

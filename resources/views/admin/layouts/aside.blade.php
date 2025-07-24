@@ -241,6 +241,13 @@
 
 
 
+                            <li class="menu-item " aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="{{route('admin.point-settings.create')}}" class="menu-link  ">
+                                    <i class="menu-bullet menu-bullet-line">
+                                    </i>
+                                    <span class="menu-text">{{__('lang.create')}} </span>
+                                </a>
+                            </li>
 
                             <li class="menu-item " aria-haspopup="true" data-menu-toggle="hover">
                                 <a href="{{route('admin.point-settings.index')}}" class="menu-link  ">

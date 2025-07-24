@@ -34,7 +34,7 @@ Route::middleware('guest:web-owner')->group(function () {
 Route::middleware('auth:web-owner')->group(function () {
   Route::get('/web-owner/email/verify', function () {
     return view('web-owner.auth.verify-email');
-})->middleware('auth:web-owner')->name('verification.notice');
+})->middleware('auth:web-owner')->name('web-owner.verification.notice');
   Route::get('web-owner/verify-email/{id}/{hash}',[OwnerAuthController::class, 'invokeEmail'])->middleware(['signed'])->name('web-owner.verification.verify');
   Route::post('web-owner/email-resend', [OwnerAuthController::class, 'resentEmail'])->name('web-owner.verification.send');
   Route::post('web-owner/logout', [OwnerAuthController::class, 'logout'])->name('web-owner.logout');
