@@ -14,7 +14,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
 
 
-  Route::middleware('auth:pharmacist','verified')->prefix('admin')->name('admin.')->group(function(){
+  Route::middleware('auth:pharmacist','pharmacist.verified')->prefix('admin')->name('admin.')->group(function(){
     Route::get('dashboard',[AdminHomeController::class,'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::resource('categories',AdminCategoryController::class);
@@ -24,9 +24,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
   });
   ///////pharmacist routes
   Route::prefix('admin')->name('admin.')->group(function () {
-      Route::get('/point-settings/edit', [PointSettingController::class, 'form'])->name('point-settings.form');
-      Route::post('/point-settings', [PointSettingController::class, 'save'])->name('point-settings.save');
-      Route::get('/point-settings', [PointSettingController::class, 'index'])->name('point-settings.index');
+      Route::resource('point-settings',PointSettingController::class)->only(['index','store','create','edit','update']);
+
+
 
       Route::resource('coupons',CouponController::class);
       Route::post('/coupons/{id}/restore', [CouponController::class, 'restore'])->name('coupons.restore');
@@ -47,9 +47,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
 
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('pharmacist/profile', [ProfileController::class, 'edit'])->name('pharmacist.profile.edit');
+    Route::patch('pharmacist/profile', [ProfileController::class, 'update'])->name('pharmacist.profile.update');
+    Route::delete('pharmacist/profile', [ProfileController::class, 'destroy'])->name('pharmacist.profile.destroy');
 });
 
 require __DIR__.'/auth.php';
@@ -59,5 +59,3 @@ require __DIR__.'/owner_auth.php';
  Route::get('/produect/filter', [App\Http\Controllers\produect\filter::class, 'index'])->name('produect.filter');
 
 use App\Http\Controllers\Product\ProductController;
-
-

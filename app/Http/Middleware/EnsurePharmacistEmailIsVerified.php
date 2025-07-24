@@ -3,11 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureEmailIsVerifiedApi
+class EnsurePharmacistEmailIsVerified
 {
     /**
      * Handle an incoming request.
@@ -16,12 +15,13 @@ class EnsureEmailIsVerifiedApi
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user('client') ||
-            ($request->user() instanceof MustVerifyEmail &&
-            ! $request->user()->hasVerifiedEmail())) {
-            return response()->json(['message' => 'Your email address is not verified.'], 409);
-        }
+        $user = $request->user('pharmacist');
 
+        if (!$user || ! $user->hasVerifiedEmail()) {
+            return $request->expectsJson()
+                ? abort(403, 'Your email address is not verified.')
+                : redirect()->route('pharmacist.verification.notice'); // 👈 بدل verification.notice العام
+        }
         return $next($request);
     }
 }

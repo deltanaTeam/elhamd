@@ -10,8 +10,8 @@
       <!--begin::Advance Table Widget 2-->
       <div class="card card-custom card-stretch gutter-b p-2 bg-light-info border border-light">
           <!--begin::Header-->
-          <div class="cart-header p-5 bg-success rounded  m-5">
-            <b  class="text-light  font-weight-bolder  h3 align-items-center ">
+          <div class="cart-header p-5 bg-secondary rounded  m-5">
+            <b  class="text-light  font-weight-bolder text-dark h3 align-items-center ">
               {{__('lang.create new category')}}
             </b>
           </div>

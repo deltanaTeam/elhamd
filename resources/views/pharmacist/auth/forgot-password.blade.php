@@ -1,7 +1,10 @@
 @extends('auth.guest')
 @section('title',  __('lang.forgot_password'))
 @section('content')
+@section('guest-links')
+<a href="{{route('pharmacist.login')}}" class="text-white p-5">{{__('lang.login')}}</a>
 
+@endsection
     <div class="login-box">
       <div class="text-center mb-4">
         <a href="{{route('pharmacist.login')}}" class="forget-link mb-30">

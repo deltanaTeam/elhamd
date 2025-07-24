@@ -22,17 +22,15 @@ class CouponController extends BaseController
     {
       if(request()->ajax()){
 
-          return DataTables::of(Coupon::withTrashed()->get())
+          return DataTables::of(Coupon::get())
               ->addIndexColumn()
-              ->addColumn('name_en', fn($row) => $row->getTranslation('name', 'en'))
-              ->addColumn('name_ar', fn($row) => $row->getTranslation('name', 'ar'))
-              ->addColumn('reason_en', fn($row) => $row->getTranslation('reason', 'en'))
-              ->addColumn('reason_ar', fn($row) => $row->getTranslation('reason', 'ar'))
+              ->addColumn('pharmacyName', fn($row) => $row->pharmacy?->name)
+
               ->addColumn('action', fn($row) => $this->showButtons($row->id) ) // حطي هنا الزر أو ال view
               ->rawColumns(['action'])
               ->make(true);
         }
-      return view('admin.coupon.index');
+      return view('admin.coupons.index');
 
     }
 
@@ -58,7 +56,6 @@ class CouponController extends BaseController
       $coupon ->start_date = $request->start_date;
       $coupon ->end_date	 = $request->end_date	;
       $coupon ->usage_limit = $request->usage_limit;
-      $coupon ->usage_times = $request->usage_times;
       $coupon ->is_active = $request->is_active;
       $coupon ->pharmacy_id  = $user->pharmacy_id;
 
@@ -82,7 +79,6 @@ class CouponController extends BaseController
       $coupon ->start_date = $request->start_date;
       $coupon ->end_date	 = $request->end_date	;
       $coupon ->usage_limit = $request->usage_limit;
-      $coupon ->usage_times = $request->usage_times;
       $coupon ->is_active = $request->is_active;
       $coupon ->pharmacy_id  = $user->pharmacy_id;
 
@@ -100,58 +96,30 @@ class CouponController extends BaseController
         return redirect()->route('admin.coupons.index')->with('success','deleted successfully');
     }
 
-    public function restore(Request $request ,$id)
-    {
-        $coupon = Coupon::withTrashed()->findOrFail($id);
-        $coupon->restore();
-        return redirect()->route('admin.coupons.index')->with('success','restored successfully');
-
-    }
 
 
 
 
-    public function forceDelete(Request $request ,$id)
-    {
 
-        $coupon = Coupon::withTrashed()->findOrFail($id);
-
-        $coupon->forceDelete();
-
-        return redirect()->route('admin.coupons.index')->with('success','forceDelete successfully');
-    }
 
     public function showButtons($id){
-      $coupon = Coupon::withTrashed()->findOrFail($id);
-      $restore ="";
-      $force_delete = "";
-      $forceModal = "";
-      $restoreModal ="";
+      $coupon = Coupon::findOrFail($id);
+
       $deleteModal =$this->make_delete_modal($id);
       $delete  = $this->make_modal($this->deleteRow(route("admin.coupons.destroy",$id)),__('lang.delete'),"Delete",$id);
 
-      if ($coupon->trashed()) {
-        $restore = $this->make_modal($this->restoreRow(route("admin.coupons.restore",$id)),__('lang.restore'),"Restore",$id);
 
-        $force_delete = $this->make_modal($this->forceDeleteRow(route("admin.coupons.force-delete",$id)),__('lang.forceDelete'),"forceDelete",$id);
-        $forceModal =  $this->make_force_delete_modal($id);
-        $restoreModal = $this->make_restore_modal($id);
-        $deleteModal ="";
 
-        $delete  = "";
-
-      }
 
        $edit = $this->make_edit(route("admin.coupons.edit",$id));
        return '<div class="btn-group btn-group-sm px-1">' .
                    ($edit ?? '') .
                    ($deleteModal ?? '') .
-                   ($restoreModal ?? '') .
-                   ($forceModal ?? '') .
+
                '</div>' .
-               ($delete ?? '') .
-               ($restore ?? '') .
-               ($force_delete ?? '');      ;
+               ($delete ?? '')
+
+                   ;
     }
 
     // public function showButtons($id){

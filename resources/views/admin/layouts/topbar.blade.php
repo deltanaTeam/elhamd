@@ -16,11 +16,13 @@
                     >
                     <span class="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
                       @if(auth('pharmacist')->check())
-                        <a class="btn" href="{{ route('admin.profile.edit') }}">
+                        <a class="btn" href="{{ route('pharmacist.profile.edit') }}">
                             {{ auth('pharmacist')->user()->name }}
                         </a>
                       @elseif(auth('web-owner')->check())
-
+                      <a class="btn" href="{{ route('web-owner.profile.edit') }}">
+                          {{ auth('web-owner')->user()->name }}
+                      </a>
                       @else
                       username
                       @endif

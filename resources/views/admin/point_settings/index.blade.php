@@ -34,6 +34,7 @@
                            ['title' => __('lang.earning_rate')],
                            ['title' => __('lang.redeem_rate')],
                            ['title' => __('lang.active')],
+                           ['title' => __('lang.pharmacyName')],
 
                            ['title' => __('lang.actions')],
                        ],
@@ -50,13 +51,14 @@
 
 
 @include('admin.partials.datatable_script', [
-       'id' => 'category_table',
-       'ajax_url' => route('admin.categories.index'),
+       'id' => 'point_table',
+       'ajax_url' => route('admin.point-settings.index'),
        'datatable_columns' => [
            ['data' => 'DT_RowIndex', 'name' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
            ['data' => 'earning_rate', 'name' => 'earning_rate'],
            ['data' => 'redeem_rate', 'name' => 'redeem_rate'],
            ['data' => 'is_active', 'name' => 'is_active'],
+           ['data' => 'pharmacyName', 'name' => 'pharmacyName'],
 
            ['data' => 'action', 'name' => 'action', 'orderable' => false],
        ]
