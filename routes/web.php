@@ -7,10 +7,32 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController ;
 use App\Http\Controllers\Dashboard\CategoryController as AdminCategoryController ;
 use App\Http\Controllers\Dashboard\{CouponController,PointSettingController } ;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Controllers\Pharmacy\Api\PharmacyProductController;
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
+
+
+
+  Route::middleware('auth:pharmacist','verified')->prefix('admin')->name('admin.')->group(function(){
+    // عرض جميع المنتجات
+    Route::get('products', [PharmacyProductController::class, 'index'])->name('products.index');
+    
+    // عرض صفحة إضافة منتج
+    Route::get('products/create', [PharmacyProductController::class, 'create'])->name('products.create');
+    
+    // إضافة منتج جديد
+    Route::post('products', [PharmacyProductController::class, 'store'])->name('products.store');
+    
+    // تعديل منتج
+    Route::get('products/{product}/edit', [PharmacyProductController::class, 'edit'])->name('products.edit');
+    Route::put('products/{product}', [PharmacyProductController::class, 'update'])->name('products.update');
+    
+    // حذف منتج
+    Route::delete('products/{product}', [PharmacyProductController::class, 'destroy'])->name('products.destroy');
+});
+
 
 
 

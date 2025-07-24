@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        Schema::create('ingredient_master_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('master_product_id')->constrained()->onDelete('cascade');
-            $table->foreignId('active_ingredient_id')->constrained()->onDelete('cascade');
-            $table->string('amount')->nullable();// ;كمية المادة الفعالة 500 mg
-            $table->timestamps();
-        });
+        // Schema::create('ingredient_master_product', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->foreignId('master_product_id')->constrained()->onDelete('cascade');
+        //     $table->foreignId('active_ingredient_id')->constrained()->onDelete('cascade');
+        //     $table->string('amount')->nullable();// ;كمية المادة الفعالة 500 mg
+        //     $table->timestamps();
+        // });
     }
 
     /**

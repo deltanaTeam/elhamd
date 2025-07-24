@@ -156,6 +156,40 @@
                     </div>
                 </li>
 
+
+
+
+<li class="menu-item menu-item-submenu {{request()->routeIs('admin.products.*') ? 'menu-item-active' : ''}}" aria-haspopup="true" data-menu-toggle="hover">
+    <a href="javascript:;" class="menu-link menu-toggle">
+        <span class="svg-icon svg-icon-primary svg-icon-2x">
+        </span>
+        <span class="menu-text mx-2">{{__('lang.products')}}</span>
+        <i class="menu-arrow"></i>
+    </a>
+    <div class="menu-submenu">
+        <i class="menu-arrow"></i>
+        <ul class="menu-subnav">
+
+            <!-- رابط إضافة منتج -->
+            <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover">
+               <a href="{{ route('admin.products.create') }}" class="menu-link">
+    <span class="menu-text">{{ __('lang.create') }}</span>
+</a>
+            </li>
+
+            <!-- رابط عرض جميع المنتجات -->
+            <li class="menu-item" aria-haspopup="true" data-menu-toggle="hover">
+                <a href="{{ route('admin.products.index') }}" class="menu-link">
+                    <i class="menu-bullet menu-bullet-line"></i>
+                    <span class="menu-text">{{ __('lang.show all') }}</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</li>
+
+                
                 <li class="menu-item menu-item-submenu {{request()->routeIs('admin.coupons.*') ?'menu-item-active':''}}" aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
                       <span class="svg-icon svg-icon-primary svg-icon-2x">

@@ -6,7 +6,7 @@ use App\Http\Controllers\API\ProductRatingController;
 use App\Http\Controllers\Client\Api\MedicationController;
 
 use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\Pharmacy\Api\PharmacyProductController;
+// use App\Http\Controllers\Pharmacy\Api\PharmacyProductController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Http\Controllers\Client\Api\{HomeController,CartController ,OrderController,ClientAuthController}  ;
@@ -24,19 +24,19 @@ Route::get('/brands/show/{id}',[HomeController::class,'showBrand'])->name('brand
 
 
 
-Route::middleware('auth:sanctum')->prefix('product')->group(function () {
-    // عرض جميع المنتجات
-    Route::get('products', [PharmacyProductController::class, 'index']);
+// Route::middleware('auth:sanctum')->prefix('product')->group(function () {
+//     // عرض جميع المنتجات
+//     Route::get('products', [PharmacyProductController::class, 'index']);
 
-    // إضافة منتج جديد
-    Route::post('add', [PharmacyProductController::class, 'store']);  // تأكد من أن الـ URL هو '/add'
+//     // إضافة منتج جديد
+//     Route::post('add', [PharmacyProductController::class, 'store']);  // تأكد من أن الـ URL هو '/add'
 
-    // تحديث منتج موجود
-    Route::put('/{product}', [PharmacyProductController::class, 'update']);
+//     // تحديث منتج موجود
+//     Route::put('/{product}', [PharmacyProductController::class, 'update']);
 
-    // حذف منتج
-    Route::delete('/{product}', [PharmacyProductController::class, 'destroy']);
-});
+//     // حذف منتج
+//     Route::delete('/{product}', [PharmacyProductController::class, 'destroy']);
+// });
 
 
 Route::middleware('guest')->group(function () {
